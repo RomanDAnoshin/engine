@@ -1,7 +1,7 @@
 #ifndef LABEL_H
 #define LABEL_H
 
-#include "engine/text/text.h"
+#include "text/text.h"
 #include "widget.h"
 
 namespace engine
