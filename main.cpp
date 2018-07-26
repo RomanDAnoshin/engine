@@ -16,11 +16,11 @@ int main(int argc, char *argv[])
     EntityContainer& scene = engine.GetScene().GetRootEntity();
     WidgetContainer& gui = engine.GetScene().GetRootWidget();
 
-    Bitmap backTexture("resources/back.png");
+    Bitmap backTexture("../resources/back.png");
     Sprite back(&backTexture);
     scene.AddEntity(&back);
 
-    Bitmap face("resources/face.png");
+    Bitmap face("../resources/face.png");
     Sprite s(&face);
     s.SetSize({64,64});
     s.SetCenter({32,32});
@@ -138,6 +138,7 @@ int main(int argc, char *argv[])
         b1->SetTransform(b2Vec2_zero, 0);
         b1->SetLinearVelocity(b2Vec2_zero);
         b1->SetAngularVelocity(0);
+        std::cout << "Click" << std::endl;
     });
     button.EventMouseEnter().ConnectStdFunction([&engine, &button]() {
         engine.SetSystemCursor(SYSTEM_CURSOR::SYSTEM_CURSOR_LINK);

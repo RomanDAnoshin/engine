@@ -4,62 +4,62 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(SOURCES
     main.cpp
-    engine/engine.cpp
-    engine/texture.cpp
-    engine/physics.cpp
-    engine/input.cpp
-    engine/cursor.cpp
-    engine/scene.cpp
-    engine/renderer.cpp
-    engine/transform.cpp
-    engine/text/text.cpp
-    engine/text/font.cpp
-    engine/entities/entity.cpp
-    engine/entities/simpletext.cpp
-    engine/entities/sprite.cpp
-    engine/entities/particles.cpp
-    engine/entities/entitycontainer.cpp
-    engine/entities/primitives/primitive.cpp
-    engine/entities/primitives/rectangle.cpp
-    engine/entities/primitives/ellipse.cpp
-    engine/entities/primitives/polygon.cpp
-    engine/widgets/widget.cpp
-    engine/widgets/label.cpp
-    engine/widgets/widgetcontainer.cpp
-    engine/widgets/button.cpp
-    engine/widgets/mousearea.cpp
-    engine/object.cpp
+    src/engine.cpp
+    src/texture.cpp
+    src/physics.cpp
+    src/input.cpp
+    src/cursor.cpp
+    src/scene.cpp
+    src/renderer.cpp
+    src/transform.cpp
+    src/text/text.cpp
+    src/text/font.cpp
+    src/entities/entity.cpp
+    src/entities/simpletext.cpp
+    src/entities/sprite.cpp
+    src/entities/particles.cpp
+    src/entities/entitycontainer.cpp
+    src/entities/primitives/primitive.cpp
+    src/entities/primitives/rectangle.cpp
+    src/entities/primitives/ellipse.cpp
+    src/entities/primitives/polygon.cpp
+    src/widgets/widget.cpp
+    src/widgets/label.cpp
+    src/widgets/widgetcontainer.cpp
+    src/widgets/button.cpp
+    src/widgets/mousearea.cpp
+    src/object.cpp
 )
 
 set(HEADERS
-    engine/engine.h
-    engine/globals.h
-    engine/texture.h
-    engine/physics.h
-    engine/input.h
-    engine/event.h
-    engine/cursor.h
-    engine/scene.h
-    engine/renderer.h
-    engine/transform.h
-    engine/text/text.h
-    engine/text/font.h
-    engine/entities/entity.h
-    engine/entities/simpletext.h
-    engine/entities/sprite.h
-    engine/entities/particles.h
-    engine/entities/entitycontainer.h
-    engine/entities/primitives/primitives.h
-    engine/entities/primitives/primitive.h
-    engine/entities/primitives/rectangle.h
-    engine/entities/primitives/ellipse.h
-    engine/entities/primitives/polygon.h
-    engine/widgets/widget.h
-    engine/widgets/label.h
-    engine/widgets/widgetcontainer.h
-    engine/widgets/button.h
-    engine/widgets/mousearea.h
-    engine/object.h
+    include/engine.h
+    include/globals.h
+    include/texture.h
+    include/physics.h
+    include/input.h
+    include/event.h
+    include/cursor.h
+    include/scene.h
+    include/renderer.h
+    include/transform.h
+    include/text/text.h
+    include/text/font.h
+    include/entities/entity.h
+    include/entities/simpletext.h
+    include/entities/sprite.h
+    include/entities/particles.h
+    include/entities/entitycontainer.h
+    include/entities/primitives/primitives.h
+    include/entities/primitives/primitive.h
+    include/entities/primitives/rectangle.h
+    include/entities/primitives/ellipse.h
+    include/entities/primitives/polygon.h
+    include/widgets/widget.h
+    include/widgets/label.h
+    include/widgets/widgetcontainer.h
+    include/widgets/button.h
+    include/widgets/mousearea.h
+    include/object.h
 )
 
 set(LIBS
@@ -67,17 +67,9 @@ set(LIBS
     Box2D
 )
 
-include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/libs/allegro/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/libs/Box2D/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/engine
-)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
-link_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/libs/allegro/lib
-    ${CMAKE_CURRENT_SOURCE_DIR}/libs/Box2D/lib
-)
-
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 target_link_libraries(${PROJECT_NAME} ${LIBS})
