@@ -22,6 +22,8 @@ public:
 
     virtual void HandleEvent(ALLEGRO_EVENT& event);
 
+    virtual void Update(const float dt);
+
     virtual void Render(Renderer &renderer);
 
 protected:

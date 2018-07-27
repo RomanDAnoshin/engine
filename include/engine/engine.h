@@ -11,7 +11,7 @@
 #include "renderer.h"
 #include "physics.h"
 #include "input.h"
-#include "event.h"
+#include "tools/event.h"
 #include "text/text.h"
 #include "cursor.h"
 
@@ -27,6 +27,8 @@
 #include "widgets/widgetcontainer.h"
 #include "widgets/label.h"
 #include "widgets/button.h"
+
+#include "tools/lerp.h"
 
 namespace engine
 {

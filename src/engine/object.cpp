@@ -48,6 +48,19 @@ void Object::SetName(const std::string& name)
     m_name = name;
 }
 
+void Object::Update(const float dt)
+{
+    for (auto it = m_lerps.begin(); it != m_lerps.end(); ++it) {
+        auto lerp = *it;
+        if (lerp->IsFinished()) {
+            delete lerp;
+            it = m_lerps.erase(it);
+            continue;
+        }
+        lerp->Step(dt);
+    }
+}
+
 int Object::GetOrder() const
 {
     return m_order;

@@ -62,7 +62,7 @@ void Sprite::ResetSize()
 
 void Sprite::Update(const float dt)
 {
-
+    Entity::Update(dt);
 }
 
 void Sprite::Render(Renderer& renderer)

@@ -133,8 +133,52 @@ struct Color
     unsigned char r, g, b, a;
 };
 
+inline Color operator+(const Color& l, const Color& r) { return Color(l.r + r.r, l.g + r.g, l.b + r.b, l.a + r.a); }
+
+inline Color operator-(const Color& l, const Color& r) { return Color(l.r - r.r, l.g - r.g, l.b - r.b, l.a + r.a); }
+
+inline Color operator*(const Color& l, float r) { return Color(l.r * r, l.g * r, l.b * r, l.a * r); }
+
+inline Color operator/(const Color& l, float r) { return Color(l.r / r, l.g / r, l.b / r, l.a / r); }
+
+inline Color operator+=(Color& l, const Color& r) {
+    l.r += r.r;
+    l.g += r.g;
+    l.b += r.b;
+    l.a += r.a;
+    return l;
+}
+
+inline Color operator-=(Color& l, const Color& r) {
+    l.r -= r.r;
+    l.g -= r.g;
+    l.b -= r.b;
+    l.a -= r.a;
+    return l;
+}
+
+inline Color operator*=(Color& l, float r) {
+    l.r *= r;
+    l.g *= r;
+    l.b *= r;
+    l.a *= r;
+    return l;
+}
+
+inline Color operator/=(Color& l, float r) {
+    l.r /= r;
+    l.g /= r;
+    l.b /= r;
+    l.a /= r;
+    return l;
+}
+
 inline bool operator==(const Color& l, const Color& r) {
     return (l.r == r.r && l.g == r.g && l.b == r.b && l.a == r.a);
+}
+
+inline bool operator!=(const Color& l, const Color& r) {
+    return !(l == r);
 }
 
 inline float degreesToRadians(float degrees) {

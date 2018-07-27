@@ -2,7 +2,7 @@
 #define TRANSFORM_H
 
 #include "globals.h"
-#include "event.h"
+#include "tools/event.h"
 #include <allegro5/allegro.h>
 
 namespace engine

@@ -37,7 +37,6 @@ set(HEADERS
     include/engine/texture.h
     include/engine/physics.h
     include/engine/input.h
-    include/engine/event.h
     include/engine/cursor.h
     include/engine/scene.h
     include/engine/renderer.h
@@ -60,6 +59,10 @@ set(HEADERS
     include/engine/widgets/button.h
     include/engine/widgets/mousearea.h
     include/engine/object.h
+    include/engine/tools/delegate.h
+    include/engine/tools/event.h
+    include/engine/tools/property.h
+    include/engine/tools/lerp.h
 )
 
 set(LIBS

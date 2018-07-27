@@ -39,6 +39,7 @@ void Scene::Update(const float dt)
         m_physics->Update(dt);
     }
     m_rootEntity.Update(dt);
+    m_rootWidget.Update(dt);
 }
 
 void Scene::Render(Renderer& renderer)

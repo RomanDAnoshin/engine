@@ -42,6 +42,17 @@ void WidgetContainer::HandleEvent(ALLEGRO_EVENT& event)
     }
 }
 
+void WidgetContainer::Update(const float dt)
+{
+    Widget::Update(dt);
+    for (auto object : m_objects) {
+        Widget* widget = dynamic_cast<Widget*>(object);
+        if (widget != nullptr) {
+            widget->Update(dt);
+        }
+    }
+}
+
 void WidgetContainer::Render(Renderer& renderer)
 {
     Widget::Render(renderer);

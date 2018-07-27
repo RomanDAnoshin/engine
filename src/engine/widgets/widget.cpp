@@ -131,6 +131,11 @@ void Widget::HandleEvent(ALLEGRO_EVENT& event)
 
 }
 
+void Widget::Update(const float dt)
+{
+    Object::Update(dt);
+}
+
 void Widget::Render(Renderer& renderer)
 {
     auto absPos = GetAbsolutePosition();

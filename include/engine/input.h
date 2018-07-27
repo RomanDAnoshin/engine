@@ -2,7 +2,7 @@
 #define INPUT_H
 
 #include <allegro5/allegro.h>
-#include "event.h"
+#include "tools/event.h"
 #include "globals.h"
 
 namespace engine

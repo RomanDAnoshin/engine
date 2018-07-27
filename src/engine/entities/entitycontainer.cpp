@@ -33,6 +33,7 @@ void EntityContainer::RemoveEntity(Entity* entity, bool free)
 
 void EntityContainer::Update(const float dt)
 {
+    Entity::Update(dt);
     for (auto object : m_objects) {
         Entity* entity = dynamic_cast<Entity*>(object);
         if (entity != nullptr) {

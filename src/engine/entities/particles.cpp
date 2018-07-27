@@ -250,6 +250,7 @@ void ParticleEmitter::SetLooped(bool looped)
 
 void ParticleEmitter::Update(const float dt)
 {
+    Entity::Update(dt);
     for (auto i = m_alive.begin(); i != m_alive.end(); ++i) {
         Particle* p = (*i);
         p->lifetime -= dt;

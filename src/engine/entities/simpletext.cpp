@@ -10,7 +10,7 @@ SimpleText::SimpleText(const std::string& text, const Font& font) :
 
 void SimpleText::Update(const float dt)
 {
-
+    Entity::Update(dt);
 }
 
 void SimpleText::Render(Renderer& renderer)

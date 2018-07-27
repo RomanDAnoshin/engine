@@ -11,9 +11,9 @@ class Entity : public Object, public Transformable
 public:
     Entity();
 
-    virtual ~Entity();
+    virtual ~Entity() = 0;
 
-    virtual void Update(const float dt) = 0;
+    virtual void Update(const float dt);
 
     virtual void Render(Renderer& renderer) = 0;
 

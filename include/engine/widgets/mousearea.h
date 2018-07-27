@@ -2,7 +2,7 @@
 #define MOUSEAREA_H
 
 #include <allegro5/allegro.h>
-#include "engine/event.h"
+#include "engine/tools/event.h"
 #include "engine/globals.h"
 
 namespace engine

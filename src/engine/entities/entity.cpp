@@ -7,10 +7,14 @@ Entity::Entity() :
 {
     
 }
-
 Entity::~Entity()
 {
 
+}
+
+void Entity::Update(const float dt)
+{
+    Object::Update(dt);
 }
 
 void Entity::prepareRenderer(Renderer& renderer)
