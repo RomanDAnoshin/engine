@@ -2,7 +2,8 @@
 #define OBJECT_H
 
 #include "renderer.h"
-#include "tools/lerp.h"
+#include "tools/task.h"
+#include "tools/property.h"
 #include <string>
 #include <vector>
 #include <map>
@@ -21,24 +22,26 @@ public:
 
     Container* GetContainer() const;
 
-    std::string GetName() const;
+    const std::string& GetName() const;
 
     int GetOrder() const;
 
     void SetName(const std::string& name);
 
-    template <class arg_type, class class_type, class value_type>
-    void LerpProperty(arg_type(class_type::*getter)(void) const, void(class_type::*setter)(arg_type),
-              value_type finishValue, float time)
+    template <typename arg_type, typename class_type>
+    Property<arg_type> GetProperty(arg_type(class_type::*getter)(void) const,
+                                   void(class_type::*setter)(arg_type))
     {
         class_type* object = dynamic_cast<class_type*>(this);
         if (object == nullptr) {
-            throw std::invalid_argument("Cannot cast this to class_type\n");
+            throw std::invalid_argument("Wrong class type\n");
         }
-        Property<arg_type, class_type> property(getter, setter, object);
-        auto lerp = new Lerp<arg_type, value_type>(property.ToAbstractProperty(), finishValue, time);
-        m_lerps.push_back(dynamic_cast<AbstractLerp*>(lerp));
+        return Property<arg_type>(getter, setter, object);
     }
+
+    void AddTask(Task* task);
+
+    const std::list<Task*>& GetTasks() const;
 
     virtual void Update(const float dt);
 
@@ -49,7 +52,7 @@ protected:
     std::string m_name;
     int         m_order;
 
-    std::list<AbstractLerp*>    m_lerps;
+    std::list<Task*>    m_tasks;
 
 private:
     static std::map<std::string, Object*> m_mappedObjects;

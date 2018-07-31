@@ -28,7 +28,7 @@
 #include "widgets/label.h"
 #include "widgets/button.h"
 
-#include "tools/lerp.h"
+#include "tools/interpolation.h"
 
 namespace engine
 {

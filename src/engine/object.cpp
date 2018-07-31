@@ -19,6 +19,10 @@ Object::~Object()
     if (m_container != nullptr) {
         m_container->RemoveObject(this);
     }
+    for (Task* task : m_tasks) {
+        delete task;
+    }
+    m_tasks.clear();
 }
 
 Container* Object::GetContainer() const
@@ -26,7 +30,7 @@ Container* Object::GetContainer() const
     return m_container;
 }
 
-std::string Object::GetName() const
+const std::string& Object::GetName() const
 {
     return m_name;
 }
@@ -48,16 +52,26 @@ void Object::SetName(const std::string& name)
     m_name = name;
 }
 
+void Object::AddTask(Task* task)
+{
+    m_tasks.push_back(task);
+}
+
+const std::list<Task*>& Object::GetTasks() const
+{
+    return m_tasks;
+}
+
 void Object::Update(const float dt)
 {
-    for (auto it = m_lerps.begin(); it != m_lerps.end(); ++it) {
-        auto lerp = *it;
-        if (lerp->IsFinished()) {
-            delete lerp;
-            it = m_lerps.erase(it);
+    for (auto it = m_tasks.begin(); it != m_tasks.end(); ++it) {
+        auto task = *it;
+        if (task->IsFinished()) {
+            delete task;
+            it = m_tasks.erase(it);
             continue;
         }
-        lerp->Step(dt);
+        task->Update(dt);
     }
 }
 
@@ -113,8 +127,7 @@ void Container::AddObject(Object* object, unsigned order)
         if (order >= m_objects.size()) {
             object->m_order = m_objects.size();
             m_objects.push_back(object);
-        }
-        else {
+        } else {
             object->m_order = order;
             m_objects.insert(m_objects.begin() + order, object);
         }

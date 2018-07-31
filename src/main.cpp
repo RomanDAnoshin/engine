@@ -152,11 +152,10 @@ int main(int argc, char *argv[])
 
     gui.AddWidget(&button);
 
-    //Property<const Vector2i&> pr(&Widget::GetPosition, &Widget::SetPosition, (Widget*)&button);
-
-    button.LerpProperty(&Button::GetPosition, &Button::SetPosition, Vector2f(600,400), 10.f);
-    button.LerpProperty(&Button::GetSize, &Button::SetSize, Vector2f(256, 256), 10.f);
-    button.LerpProperty(&Button::GetBackColor, &Button::SetBackColor, Color(255, 0, 0, 128), 10.f);
+    button.AddTask(make_lerp(button.GetProperty(&Button::GetPosition, &Button::SetPosition),
+                             Vector2i(0, 0), Vector2i(600,400), 10.f));
+    button.AddTask(make_lerp(button.GetProperty(&Button::GetSize, &Button::SetSize),
+                             Vector2i(32, 32), Vector2i(600,400), 10.f));
 
     Input& input = engine.GetInput();
     engine.EventUpdating().ConnectStdFunction([&engine, &input, &b1, &container, &label](const float dt) {
@@ -176,16 +175,6 @@ int main(int argc, char *argv[])
             b1->ApplyTorque(-50, true);
         if (input.IsKeyPressed(KEYBOARD::E))
             b1->ApplyTorque(50, true);
-
-//        if (input.IsKeyPressed(KEYBOARD::W)) {
-//           pr.SetValue(pr.GetValue() + Vector2i(0, -5));
-//        }
-//        if (input.IsKeyPressed(KEYBOARD::S)) {
-//           pr.SetValue(pr.GetValue() + Vector2i(0, 5));
-//        }
-
-//        auto pos = pr.GetValue();
-//        std::cout << pos.x << "  " << pos.y << std::endl;
     });
 
     engine.Start();

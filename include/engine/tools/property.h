@@ -4,46 +4,92 @@
 namespace engine
 {
 
-template <class arg_type>
-class AbstractProperty
+template <typename return_type>
+class AbstractGetter
 {
 public:
-    virtual ~AbstractProperty() { }
-    virtual AbstractProperty<arg_type>* Clone() const = 0;
-    virtual arg_type GetValue() const = 0;
-    virtual void SetValue(arg_type arg) const = 0;
+    virtual ~AbstractGetter() { }
+    virtual AbstractGetter<return_type>* Clone() const = 0;
+    virtual return_type Get() const = 0;
 };
 
-template <class arg_type, class class_type>
-class Property : public AbstractProperty<arg_type>
+template <typename class_type, typename return_type>
+class Getter : public AbstractGetter<return_type>
 {
-    typedef arg_type(class_type::*getter_type)(void) const;
-    typedef void(class_type::*setter_type)(arg_type);
-
+    typedef return_type(class_type::*getter_type)() const;
 public:
-    Property(getter_type getter, setter_type setter, class_type* object) :
-        m_getter(getter), m_setter(setter), m_object(object) { }
+    Getter(getter_type function, const class_type* object) :
+        m_function(function), m_object(object) { }
 
-    Property(const Property& property) :
-        m_getter(property.m_getter), m_setter(property.m_setter), m_object(property.m_object) { }
-
-    AbstractProperty<arg_type>* ToAbstractProperty() {
-        return dynamic_cast<AbstractProperty<arg_type>*>(this);
+    virtual AbstractGetter<return_type>* Clone() const {
+        auto getter = new Getter<class_type, return_type>(m_function, m_object);
+        return dynamic_cast<AbstractGetter<return_type>*>(getter);
     }
 
-    virtual AbstractProperty<arg_type>* Clone() const {
-        auto property = new Property<arg_type, class_type>(m_getter, m_setter, m_object);
-        return property->ToAbstractProperty();
-    }
-
-    virtual arg_type GetValue() const { return (m_object->*m_getter)(); }
-
-    virtual void SetValue(arg_type value) const { (m_object->*m_setter)(value); }
+    virtual return_type Get() const { return (m_object->*m_function)(); }
 
 private:
-    getter_type m_getter;
-    setter_type m_setter;
-    class_type* m_object;
+    const class_type*   m_object;
+    getter_type         m_function;
+};
+
+template <typename arg_type>
+class AbstractSetter
+{
+public:
+    virtual ~AbstractSetter() { }
+    virtual AbstractSetter<arg_type>* Clone() const = 0;
+    virtual void Set(arg_type args) const = 0;
+};
+
+template <typename class_type, typename arg_type>
+class Setter : public AbstractSetter<arg_type>
+{
+    typedef void(class_type::*setter_type)(arg_type);
+public:
+    Setter(setter_type function, class_type* object) :
+        m_function(function), m_object(object) { }
+
+    virtual AbstractSetter<arg_type>* Clone() const {
+        auto setter = new Setter<class_type, arg_type>(m_function, m_object);
+        return dynamic_cast<AbstractSetter<arg_type>*>(setter);
+    }
+
+    virtual void Set(arg_type value) const { (m_object->*m_function)(value); }
+
+private:
+    class_type*   m_object;
+    setter_type   m_function;
+};
+
+template <typename T>
+class Property
+{
+public:
+    Property(const AbstractGetter<T>* getter, const AbstractSetter<T>* setter) :
+        m_getter(getter->Clone()), m_setter(m_setter->Clone()) { }
+
+    template <typename class_type>
+    Property(T(class_type::*getter)(void) const, void(class_type::*setter)(T), class_type* object)
+    {
+        m_getter = new Getter<class_type, T>(getter, object);
+        m_setter = new Setter<class_type, T>(setter, object);
+    }
+
+    Property(const Property<T>& other)  :
+        m_getter(other.m_getter->Clone()), m_setter(other.m_setter->Clone()) { }
+
+    virtual ~Property() {
+        delete m_getter;
+        delete m_setter;
+    }
+
+    T GetValue() const { return m_getter->Get(); }
+    void SetValue(T value) const { m_setter->Set(value); }
+
+private:
+    AbstractGetter<T>*   m_getter;
+    AbstractSetter<T>*   m_setter;
 };
 
 }

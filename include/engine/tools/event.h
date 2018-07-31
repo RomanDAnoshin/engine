@@ -7,7 +7,7 @@
 namespace engine
 {
 
-template <class... arg_types>
+template <typename... arg_types>
 class Event
 {
 public:
@@ -31,7 +31,7 @@ public:
         m_delegates.push_back(std::make_pair(name, p));
     }
 
-    template <class class_type>
+    template <typename class_type>
     void ConnectMethod(void (class_type::*func)(arg_types...), class_type* obj,
                        const std::string& name = std::string())
     {
@@ -41,7 +41,7 @@ public:
         m_delegates.push_back(std::make_pair(name, p));
     }
 
-    template <class class_type>
+    template <typename class_type>
     void ConnectMethod(void (class_type::*func)(arg_types...) const, const class_type* obj,
                             const std::string& name = std::string())
     {

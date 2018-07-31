@@ -35,10 +35,10 @@ template <typename T>
 Vector2<T> operator-(const Vector2<T>& l, const Vector2<T>& r) { return Vector2<T>(l.x - r.x, l.y - r.y); }
 
 template <typename T>
-Vector2<T> operator*(const Vector2<T>& l, const T& r) { return Vector2<T>(l.x * r, l.y * r); }
+Vector2<T> operator*(const Vector2<T>& l, float r) { return Vector2<T>(l.x * r, l.y * r); }
 
 template <typename T>
-Vector2<T> operator/(const Vector2<T>& l, const T& r) { return Vector2<T>(l.x / r, l.y / r); }
+Vector2<T> operator/(const Vector2<T>& l, float r) { return Vector2<T>(l.x / r, l.y / r); }
 
 template <typename T>
 Vector2<T> operator+=(Vector2<T>& l, const Vector2<T>& r) {
@@ -55,14 +55,14 @@ Vector2<T> operator-=(Vector2<T>& l, const Vector2<T>& r) {
 }
 
 template <typename T>
-Vector2<T> operator*=(Vector2<T>& l, const T& r) {
+Vector2<T> operator*=(Vector2<T>& l, float r) {
     l.x *= r;
     l.y *= r;
     return l;
 }
 
 template <typename T>
-Vector2<T> operator/=(Vector2<T>& l, const T& r) {
+Vector2<T> operator/=(Vector2<T>& l, float r) {
     l.x /= r;
     l.y /= r;
     return l;

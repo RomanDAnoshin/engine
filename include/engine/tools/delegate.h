@@ -9,7 +9,7 @@ namespace engine
 template <class T>
 class AbstractDelegate;
 
-template<class return_type, class... arg_types>
+template <typename return_type, typename... arg_types>
 class AbstractDelegate<return_type(arg_types...)>
 {
 public:
@@ -18,10 +18,10 @@ public:
     virtual return_type Invoke(arg_types... args...) const = 0;
 };
 
-template <class T>
+template <typename T>
 class Delegate;
 
-template <class class_type, class return_type, class... arg_types>
+template <typename class_type, typename return_type, typename... arg_types>
 class Delegate<return_type (class_type::*)(arg_types...)> :
     public AbstractDelegate<return_type(arg_types...)>
 {
@@ -38,7 +38,7 @@ private:
     function_type   m_function;
 };
 
-template <class class_type, class return_type, class... arg_types>
+template <typename class_type, typename return_type, typename... arg_types>
 class Delegate<return_type (class_type::*)(arg_types...) const> :
     public AbstractDelegate<return_type(arg_types...)>
 {
@@ -55,7 +55,7 @@ private:
     function_type       m_function;
 };
 
-template <class return_type, class... arg_types>
+template <typename return_type, typename... arg_types>
 class Delegate<return_type (*)(arg_types...)> :
     public AbstractDelegate<return_type(arg_types...)>
 {
@@ -70,7 +70,7 @@ private:
     function_type m_function;
 };
 
-template <class return_type, class... arg_types>
+template <typename return_type, typename... arg_types>
 class Delegate<std::function<return_type(arg_types...)>> :
     public AbstractDelegate<return_type(arg_types...)>
 {
