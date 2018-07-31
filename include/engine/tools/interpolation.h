@@ -24,8 +24,8 @@ public:
 
     }
 
-    Lerp(const Property<arg_type>& property, arg_type startValue, float time) :
-        Lerp(property, startValue, property.GetValue(), time) { }
+    Lerp(const Property<arg_type>& property, arg_type finishValue, float time) :
+        Lerp(property, property.GetValue(), finishValue, time) { }
 
     virtual ~Lerp() { }
 
