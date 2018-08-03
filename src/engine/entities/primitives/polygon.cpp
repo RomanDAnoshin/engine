@@ -32,15 +32,15 @@ void GraphicPolygon:: SetVertex(unsigned index, const Vector2f& vertex)
     m_vertices[index] = vertex;
 }
 
-void GraphicPolygon::Update(const float dt)
+void GraphicPolygon::SetVertices(std::initializer_list<Vector2f> vertices)
 {
-
+    m_vertices = std::vector<Vector2f>(vertices);
 }
 
 void GraphicPolygon::Render(Renderer& renderer)
 {
     prepareRenderer(renderer);
-    renderer.FillPolygon(m_vertices.data(), m_vertices.size(), m_backColor);
+    renderer.FillPolygon(m_vertices.data(), m_vertices.size(), m_color);
     if (m_borderStyle.visible) {
         renderer.DrawPolygon(m_vertices.data(), m_vertices.size(), m_borderStyle.color, m_borderStyle.thickness);
     }

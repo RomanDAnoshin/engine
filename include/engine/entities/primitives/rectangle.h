@@ -25,8 +25,6 @@ public:
 
     void SetCenter(float x, float y);
 
-    virtual void Update(const float dt);
-
     virtual void Render(Renderer& renderer);
 
     Event<const Vector2f&>& EventSizeChanged();

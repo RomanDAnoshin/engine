@@ -48,22 +48,18 @@ int main(int argc, char *argv[])
     rect1.SetSize(Vector2f(32, 16));
     rect1.SetPosition(-48, 0);
     rect1.SetCenter(Vector2f(16,8));
-    rect1.SetBackColor(Color(64,128,211));
+    rect1.SetColor(Color(64,128,211));
 
     GraphicRectangle rect2;
     rect2.SetSize(Vector2f(32, 16));
     rect2.SetPosition(48, 0);
     rect2.SetCenter(Vector2f(16,8));
-    rect2.SetBackColor(Color(64,128,211));
+    rect2.SetColor(Color(64,128,211));
 
     GraphicPolygon poly;
-    poly.SetVerticesCount(4);
-    poly.SetVertex(0, Vector2f(-8, 0));
-    poly.SetVertex(1, Vector2f(-16, 32));
-    poly.SetVertex(2, Vector2f(16, 32));
-    poly.SetVertex(3, Vector2f(8, 0));
+    poly.SetVertices({Vector2f(-8, 0), Vector2f(-16, 32), Vector2f(16, 32), Vector2f(8, 0)});
     poly.SetPosition(0, 18);
-    poly.SetBackColor(Color(243,124,55));
+    poly.SetColor(Color(243,124,55));
     container.AddEntity(&poly, 1);
 
     container.AddEntity(&rect1);
@@ -90,7 +86,7 @@ int main(int argc, char *argv[])
     rect.SetPosition(400,300);
     rect.SetSize(Vector2f(64,128));
     rect.SetCenter(Vector2f(32,64));
-    rect.SetBackColor(Color(32,32,255));
+    rect.SetColor(Color(32,32,255));
     rect.SetBorderStyle(BorderStyle(Color(0,0,0), 10));
     scene.AddEntity(&rect);
 
@@ -152,10 +148,23 @@ int main(int argc, char *argv[])
 
     gui.AddWidget(&button);
 
+    poly.AddTask(make_lerp(poly.GetProperty(&GraphicPolygon::GetPosition, &GraphicPolygon::SetPosition),
+                           Vector2f(0, 300), 10.f));
+
     button.AddTask(make_lerp(button.GetProperty(&Button::GetPosition, &Button::SetPosition),
                              Vector2i(0, 0), Vector2i(600,400), 10.f));
     button.AddTask(make_lerp(button.GetProperty(&Button::GetSize, &Button::SetSize),
                              Vector2i(32, 32), Vector2i(600,400), 10.f));
+
+    Bitmap oldmanBitmap("../resources/oldman.png");
+    Animation oldman(&oldmanBitmap);
+    oldman.SetPosition(500, 100);
+    oldman.SetSize(64,64);
+    for (int i = 0; i < 4; ++i)
+        for (int j = 0; j < 9; ++j)
+            oldman.AddFrame(IntRect(j * 64, i * 64, 64, 64));
+    oldman.Play(9, 17, 0.1f, true);
+    scene.AddEntity(&oldman);
 
     Input& input = engine.GetInput();
     engine.EventUpdating().ConnectStdFunction([&engine, &input, &b1, &container, &label](const float dt) {

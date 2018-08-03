@@ -189,6 +189,10 @@ inline float radiansToDegrees(float radians) {
     return radians * 57.2957795f;
 }
 
+template <typename T>
+inline const T& clamp(const T& x, const T& lower, const T& upper) {
+    return std::min(upper, std::max(x, lower));
+}
 
 struct BorderStyle
 {

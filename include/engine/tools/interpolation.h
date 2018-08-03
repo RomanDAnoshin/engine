@@ -35,8 +35,7 @@ public:
             return;
         }
         if ((m_currentTime -= dt) < 0) {
-            m_finished = true;
-            return;
+            Finish();
         }
         float percent = m_currentTime / m_totalTime;
         value_type value = m_startValue * percent + m_finishValue * (1.f - percent);

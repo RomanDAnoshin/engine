@@ -54,7 +54,9 @@ void Object::SetName(const std::string& name)
 
 void Object::AddTask(Task* task)
 {
-    m_tasks.push_back(task);
+    if (task != nullptr) {
+        m_tasks.push_back(task);
+    }
 }
 
 const std::list<Task*>& Object::GetTasks() const

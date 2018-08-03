@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 2.6)
 project(engine)
 set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 set(SOURCES
     src/main.cpp
@@ -19,6 +22,7 @@ set(SOURCES
     src/engine/entities/sprite.cpp
     src/engine/entities/particles.cpp
     src/engine/entities/entitycontainer.cpp
+    src/engine/entities/animation.cpp
     src/engine/entities/primitives/primitive.cpp
     src/engine/entities/primitives/rectangle.cpp
     src/engine/entities/primitives/ellipse.cpp
@@ -48,6 +52,7 @@ set(HEADERS
     include/engine/entities/sprite.h
     include/engine/entities/particles.h
     include/engine/entities/entitycontainer.h
+    include/engine/entities/animation.h
     include/engine/entities/primitives/primitives.h
     include/engine/entities/primitives/primitive.h
     include/engine/entities/primitives/rectangle.h

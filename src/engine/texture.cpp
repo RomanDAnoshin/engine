@@ -4,8 +4,9 @@ using namespace engine;
 Bitmap::Bitmap(const std::string &file) :
     m_bitmap(nullptr)
 {
-    if (!file.empty())
+    if (!file.empty()) {
         LoadFromFile(file);
+    }
 }
 
 Bitmap::~Bitmap()
@@ -27,8 +28,9 @@ void Bitmap::LoadFromFile(const std::string &file)
 {
     Clear();
     m_bitmap = al_load_bitmap(file.c_str());
-    if (m_bitmap == nullptr)
+    if (m_bitmap == nullptr) {
         throw std::runtime_error("Failed to load texture " + file);
+    }
     m_size = Vector2i(al_get_bitmap_width(m_bitmap), al_get_bitmap_height(m_bitmap));
 }
 
@@ -75,6 +77,7 @@ void Textured::SetSourceRect(const IntRect &source)
 
 void Textured::ResetSource()
 {
-    if (m_bitmap != nullptr)
+    if (m_bitmap != nullptr) {
         m_source = IntRect(Vector2i(0, 0), m_bitmap->GetSize());
+    }
 }

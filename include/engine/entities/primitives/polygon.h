@@ -22,7 +22,7 @@ public:
 
     void SetVertex(unsigned index, const Vector2f& vertex);
 
-    virtual void Update(const float dt);
+    void SetVertices(std::initializer_list<Vector2f> vertices);
 
     virtual void Render(Renderer& renderer);
 

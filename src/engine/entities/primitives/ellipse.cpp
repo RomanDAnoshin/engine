@@ -28,15 +28,10 @@ void GraphicEllipse::SetRadius(const Vector2f &radius)
     m_radius = radius;
 }
 
-void GraphicEllipse::Update(const float dt)
-{
-
-}
-
 void GraphicEllipse::Render(Renderer& renderer)
 {
     prepareRenderer(renderer);
-    renderer.FillEllipse(Vector2f(0.f, 0.f), m_radius, m_backColor);
+    renderer.FillEllipse(Vector2f(0.f, 0.f), m_radius, m_color);
     if (m_borderStyle.visible) {
         renderer.DrawEllipse(Vector2f(0.f, 0.f), m_radius, m_borderStyle.color, m_borderStyle.thickness);
     }

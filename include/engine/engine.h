@@ -19,6 +19,7 @@
 
 #include "entities/entitycontainer.h"
 #include "entities/sprite.h"
+#include "entities/animation.h"
 #include "entities/particles.h"
 #include "entities/simpletext.h"
 #include "entities/primitives/primitives.h"

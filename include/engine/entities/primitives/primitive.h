@@ -13,16 +13,16 @@ public:
 
     virtual ~GraphicPrimitive() = 0;
 
-    const Color& GetBackColor() const;
+    const Color& GetColor() const;
 
     const BorderStyle& GetBorderStyle();
 
-    void SetBackColor(const Color& backColor);
+    void SetColor(const Color& color);
 
     void SetBorderStyle(const BorderStyle& borderStyle);
 
 protected:
-    Color       m_backColor;
+    Color       m_color;
     BorderStyle m_borderStyle;
 };
 

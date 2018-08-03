@@ -45,15 +45,10 @@ void GraphicRectangle::SetCenter(float x, float y)
     SetCenter(center);
 }
 
-void GraphicRectangle::Update(const float dt)
-{
-
-}
-
 void GraphicRectangle::Render(Renderer& renderer)
 {
     prepareRenderer(renderer);
-    renderer.FillRectangle(m_center * -1.f, m_size, m_backColor);
+    renderer.FillRectangle(m_center * -1.f, m_size, m_color);
     if (m_borderStyle.visible) {
         renderer.DrawRectangle(m_center * -1.f, m_size, m_borderStyle.color, m_borderStyle.thickness);
     }
@@ -88,7 +83,7 @@ void GraphicRoundedRectangle::SetRadius(float radius)
 void GraphicRoundedRectangle::Render(Renderer& renderer)
 {
     prepareRenderer(renderer);
-    renderer.FillRoundedRectangle(m_center * -1.f, m_size, m_backColor, m_radius);
+    renderer.FillRoundedRectangle(m_center * -1.f, m_size, m_color, m_radius);
     if (m_borderStyle.visible) {
         renderer.DrawRoundedRectangle(m_center * -1.f, m_size, m_borderStyle.color, m_radius, m_borderStyle.thickness);
     }

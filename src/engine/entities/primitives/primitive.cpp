@@ -12,9 +12,9 @@ GraphicPrimitive::~GraphicPrimitive()
 
 }
 
-const Color& GraphicPrimitive::GetBackColor() const
+const Color& GraphicPrimitive::GetColor() const
 {
-    return m_backColor;
+    return m_color;
 }
 
 const engine::BorderStyle& GraphicPrimitive::GetBorderStyle()
@@ -22,9 +22,9 @@ const engine::BorderStyle& GraphicPrimitive::GetBorderStyle()
     return m_borderStyle;
 }
 
-void GraphicPrimitive::SetBackColor(const Color &backColor)
+void GraphicPrimitive::SetColor(const Color& color)
 {
-    m_backColor = backColor;
+    m_color = color;
 }
 
 void GraphicPrimitive::SetBorderStyle(const BorderStyle& borderStyle)

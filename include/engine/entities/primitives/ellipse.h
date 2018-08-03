@@ -19,8 +19,6 @@ public:
 
     void SetRadius(const Vector2f& radius);
 
-    virtual void Update(const float dt);
-
     virtual void Render(Renderer& renderer);
 
 protected:
