@@ -19,10 +19,7 @@ Object::~Object()
     if (m_container != nullptr) {
         m_container->RemoveObject(this);
     }
-    for (Task* task : m_tasks) {
-        delete task;
-    }
-    m_tasks.clear();
+    ClearTasks();
 }
 
 Container* Object::GetContainer() const
@@ -62,6 +59,14 @@ void Object::AddTask(Task* task)
 const std::list<Task*>& Object::GetTasks() const
 {
     return m_tasks;
+}
+
+void Object::ClearTasks()
+{
+    for (Task* task : m_tasks) {
+        delete task;
+    }
+    m_tasks.clear();
 }
 
 void Object::Update(const float dt)
@@ -107,10 +112,13 @@ const std::vector<Object*>&Container::GetObjects() const
     return m_objects;
 }
 
-void Container::Clear(bool free)
+void Container::Clear()
 {
-    for (auto i: m_objects) {
-        RemoveObject(i, free);
+    while (!m_objects.empty()) {
+        Object* object = m_objects.back();
+        object->m_container = nullptr;
+        object->m_order = -1;
+        m_objects.pop_back();
     }
 }
 
@@ -139,29 +147,25 @@ void Container::AddObject(Object* object, unsigned order)
     if (parent == this) {
         ChangeOrder(object, order);
     } else {
-        parent->RemoveObject(object, false);
+        parent->RemoveObject(object);
         AddObject(object, order);
     }
 }
 
-void Container::RemoveObject(Object* object, bool free)
+void Container::RemoveObject(Object* object)
 {
     if (object == nullptr) {
         throw std::invalid_argument("Object is nullptr\n");
     }
     if (object->m_container != this) {
-        throw std::invalid_argument("Does not contain object\n");
+        throw std::invalid_argument("Does not contain object " + object->m_name + "\n");
     }
     m_objects.erase(m_objects.begin() + object->m_order);
     for (int i = object->m_order; i != (int)m_objects.size(); ++i) {
         m_objects[i]->m_order = i;
     }
-    if (free == true) {
-        delete object;
-    } else {
-        object->m_order = -1;
-        object->m_container = nullptr;
-    }
+    object->m_container = nullptr;
+    object->m_order = -1;
 }
 
 void Container::ChangeOrder(Object* object, unsigned order)

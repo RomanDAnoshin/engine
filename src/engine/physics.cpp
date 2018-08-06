@@ -62,7 +62,7 @@ void Physics_Box2D::Update(const float dt)
     for (const b2Body* ptr = m_world->GetBodyList(); ptr != nullptr; ptr = ptr->GetNext()) {
         Entity* entity = static_cast<Entity*>(ptr->GetUserData());
         if (entity != nullptr) {
-            entity->SetRotationRad(ptr->GetAngle());
+            entity->SetRotation(ptr->GetAngle());
             entity->SetPosition(ptr->GetPosition().x * m_scale, ptr->GetPosition().y * m_scale);
         }
     }

@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 
     EntityContainer container;
     container.AddEntity(&s);
-    container.SetPosition(0,0);
+    container.SetPosition(100,100);
     scene.AddEntity(&container);
 
     SimpleText text("Houston, we have a problem");
@@ -38,10 +38,13 @@ int main(int argc, char *argv[])
 
     PointParticleEmitter particle;
     particle.SetBitmap(&face);
-    particle.SetRandomAngleDeg(75, 105);
-    particle.SetParticleCount(10);
+    particle.SetRandomAngle(Angle::FromDegrees(75), Angle::FromDegrees(105));
     particle.SetPosition(0, 32);
-    particle.SetDynamicColor(Color(255,64,0), Color(128, 0, 0, 64));
+    ParticleParameters params;
+    params.startColorRange = Color(255, 64, 0);
+    params.finishColorRange = Color(128, 0, 0, 64);
+    params.delayRange = 0.02f;
+    particle.SetParameters(params);
     container.AddEntity(&particle, 0);
 
     GraphicRectangle rect1;
@@ -129,13 +132,17 @@ int main(int argc, char *argv[])
                 );
     gui.AddWidget(&label);
 
+
+    float angle = 0.f;
+    float speed = 250.f;
     Button button("Reset");
-    button.SetPosition(200, 200);
-    button.EventClick().ConnectStdFunction([b1]() {
-        b1->SetTransform(b2Vec2_zero, 0);
+    button.SetPosition(800 - button.GetSize().x, 0);
+    button.EventClick().ConnectStdFunction([b1, &particle, &angle]() {
+        angle = 0;
+        particle.SetMaxParticleCount(0);
+        b1->SetTransform(b2Vec2(5, 5), angle);
         b1->SetLinearVelocity(b2Vec2_zero);
         b1->SetAngularVelocity(0);
-        std::cout << "Click" << std::endl;
     });
     button.EventMouseEnter().ConnectStdFunction([&engine, &button]() {
         engine.SetSystemCursor(SYSTEM_CURSOR::SYSTEM_CURSOR_LINK);
@@ -148,16 +155,26 @@ int main(int argc, char *argv[])
 
     gui.AddWidget(&button);
 
-    poly.AddTask(make_lerp(poly.GetProperty(&GraphicPolygon::GetPosition, &GraphicPolygon::SetPosition),
-                           Vector2f(0, 300), 10.f));
+    auto lerp = make_lerp(button.GetProperty(&Button::GetPosition, &Button::SetPosition),
+                          Vector2f(button.GetPosition().x, 600 - button.GetSize().y), 10.f);
+    lerp->EventFinished().ConnectStdFunction([&button]() {
+        auto lerp1 = make_lerp(button.GetProperty(&Button::GetPosition, &Button::SetPosition),
+                              Vector2f(button.GetPosition().x, 0), 10.f);
+        button.AddTask(lerp1);
+    });
+    button.AddTask(lerp);
 
-    button.AddTask(make_lerp(button.GetProperty(&Button::GetPosition, &Button::SetPosition),
-                             Vector2i(0, 0), Vector2i(600,400), 10.f));
-    button.AddTask(make_lerp(button.GetProperty(&Button::GetSize, &Button::SetSize),
-                             Vector2i(32, 32), Vector2i(600,400), 10.f));
+//    poly.AddTask(make_lerp(poly.GetProperty(&GraphicPolygon::GetPosition, &GraphicPolygon::SetPosition),
+//                           Vector2f(0, 300), 10.f));
+
+//    button.AddTask(make_lerp(button.GetProperty(&Button::GetPosition, &Button::SetPosition),
+//                             Vector2i(0, 0), Vector2i(600,400), 10.f));
+//    button.AddTask(make_lerp(button.GetProperty(&Button::GetSize, &Button::SetSize),
+//                             Vector2i(32, 32), Vector2i(600,400), 10.f));
+
 
     Bitmap oldmanBitmap("../resources/oldman.png");
-    Animation oldman(&oldmanBitmap);
+    FrameAnimation oldman(&oldmanBitmap);
     oldman.SetPosition(500, 100);
     oldman.SetSize(64,64);
     for (int i = 0; i < 4; ++i)
@@ -166,28 +183,26 @@ int main(int argc, char *argv[])
     oldman.Play(9, 17, 0.1f, true);
     scene.AddEntity(&oldman);
 
-    Input& input = engine.GetInput();
-    engine.EventUpdating().ConnectStdFunction([&engine, &input, &b1, &container, &label](const float dt) {
-        float value = 250.0 * dt;
-        b2Vec2 force(0, 0);
-        if (input.IsKeyPressed(KEYBOARD::UP))
-            force.y -= value;
-        if (input.IsKeyPressed(KEYBOARD::DOWN))
-            force.y += value;
-        if (input.IsKeyPressed(KEYBOARD::LEFT))
-            force.x -= value;
-        if (input.IsKeyPressed(KEYBOARD::RIGHT))
-            force.x += value;
+    engine.EventUpdating().ConnectStdFunction([&engine, &b1, &container, &particle, &angle, &speed](const float dt) {
+        float value = speed * dt;
+        if (Input::IsKeyPressed(KEYBOARD::W))
+            particle.SetMaxParticleCount(particle.GetMaxParticleCount() + 1);
+        if (Input::IsKeyPressed(KEYBOARD::S))
+            particle.SetMaxParticleCount(particle.GetMaxParticleCount() - 1);
+        speed = particle.GetAliveParticleCount() * 10.f;
+        if (Input::IsKeyPressed(KEYBOARD::A))
+            angle -= 2.f * dt;
+        if (Input::IsKeyPressed(KEYBOARD::D))
+            angle += 2.f * dt;
+        b1->SetTransform(b1->GetPosition(), angle);
+        Vector2f direction(std::sin(angle), -1.f * std::cos(angle));
+        b2Vec2 force(direction.x * value, direction.y * value);
         if (force.x != 0 || force.y != 0)
             b1->ApplyForce(force, b1->GetPosition(), true);
-        if (input.IsKeyPressed(KEYBOARD::Q))
-            b1->ApplyTorque(-50, true);
-        if (input.IsKeyPressed(KEYBOARD::E))
-            b1->ApplyTorque(50, true);
     });
 
     engine.Start();
-
+    scene.Clear();
     engine.Cleanup();
     return 0;
 }

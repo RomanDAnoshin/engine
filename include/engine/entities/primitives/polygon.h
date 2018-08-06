@@ -12,8 +12,6 @@ class GraphicPolygon : public GraphicPrimitive
 public:
     GraphicPolygon();
 
-    virtual ~GraphicPolygon();
-
     unsigned GetVerticesCount() const;
 
     const Vector2f& GetVertex(unsigned index) const;
@@ -24,7 +22,7 @@ public:
 
     void SetVertices(std::initializer_list<Vector2f> vertices);
 
-    virtual void Render(Renderer& renderer);
+    void Render(Renderer& renderer);
 
 protected:
     std::vector<Vector2f>   m_vertices;

@@ -18,7 +18,7 @@ public:
 
     void AddWidget(Widget* widget, unsigned order = -1);
 
-    void RemoveWidget(Widget* widget, bool free = false);
+    void RemoveWidget(Widget* widget);
 
     virtual void HandleEvent(ALLEGRO_EVENT& event);
 

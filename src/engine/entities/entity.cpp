@@ -7,6 +7,7 @@ Entity::Entity() :
 {
     
 }
+
 Entity::~Entity()
 {
 
@@ -19,7 +20,7 @@ void Entity::Update(const float dt)
 
 void Entity::prepareRenderer(Renderer& renderer)
 {
-    Transform transform = m_transform;
+    Transform transform(m_position, m_scale, m_rotation);
     transform.Compose(renderer.GetTransform());
     renderer.SetTransform(transform);
 }

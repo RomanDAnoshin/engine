@@ -8,11 +8,6 @@ GraphicEllipse::GraphicEllipse() :
 
 }
 
-GraphicEllipse::~GraphicEllipse()
-{
-
-}
-
 const Vector2f& GraphicEllipse::GetRadius() const
 {
     return m_radius;

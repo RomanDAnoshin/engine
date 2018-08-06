@@ -22,13 +22,13 @@ void WidgetContainer::AddWidget(Widget* widget, unsigned order)
     AddObject(object, order);
 }
 
-void WidgetContainer::RemoveWidget(Widget* widget, bool free)
+void WidgetContainer::RemoveWidget(Widget* widget)
 {
     Object* object = dynamic_cast<Object*>(widget);
     if (object == nullptr) {
         throw std::invalid_argument("Invalid widget\n");
     }
-    RemoveObject(object, free);
+    RemoveObject(object);
 }
 
 void WidgetContainer::HandleEvent(ALLEGRO_EVENT& event)

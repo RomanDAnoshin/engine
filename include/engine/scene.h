@@ -13,6 +13,8 @@ class Scene
 public:
     Scene();
 
+    virtual ~Scene();
+
     EntityContainer& GetRootEntity();
 
     WidgetContainer& GetRootWidget();

@@ -8,11 +8,6 @@ Sprite::Sprite(const Bitmap* bitmap) :
     m_size = bitmap == nullptr ? Vector2f(0.f, 0.f) : Vector2f(bitmap->GetSize());
 }
 
-Sprite::~Sprite()
-{
-
-}
-
 void Sprite::Render(Renderer& renderer)
 {
     if (m_bitmap != nullptr) {

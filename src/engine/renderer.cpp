@@ -52,19 +52,19 @@ void Renderer::SetScalingFactor(const Vector2f& factor)
     useTransform();
 }
 
+void Renderer::DrawBitmap(const Bitmap* bitmap, const IntRect& source, const FloatRect& dest) const
+{
+    al_draw_scaled_bitmap(bitmap->m_bitmap,
+                          source.pos.x, source.pos.y, source.size.x, source.size.y,
+                          dest.pos.x, dest.pos.y, dest.size.x, dest.size.y, 0);
+}
+
 void Renderer::DrawBitmap(const Bitmap* bitmap, const IntRect& source, const FloatRect& dest, const Color& color) const
 {
-    if (color == Color()) {
-        al_draw_scaled_bitmap(bitmap->m_bitmap,
-                              source.pos.x, source.pos.y, source.size.x, source.size.y,
-                              dest.pos.x, dest.pos.y, dest.size.x, dest.size.y, 0);
-    }
-    else {
-        al_draw_tinted_scaled_bitmap(bitmap->m_bitmap,
-                                     al_map_rgba(color.r, color.g, color.b, color.a),
-                                     source.pos.x, source.pos.y, source.size.x, source.size.y,
-                                     dest.pos.x, dest.pos.y, dest.size.x, dest.size.y, 0);
-    }
+    al_draw_tinted_scaled_bitmap(bitmap->m_bitmap,
+                                 al_map_rgba(color.r, color.g, color.b, color.a),
+                                 source.pos.x, source.pos.y, source.size.x, source.size.y,
+                                 dest.pos.x, dest.pos.y, dest.size.x, dest.size.y, 0);
 }
 
 void Renderer::DrawText(const Font* font, const std::string& text, const Vector2f& position, HAlignment align, const Color& color) const

@@ -67,8 +67,9 @@ set(HEADERS
     include/engine/tools/delegate.h
     include/engine/tools/event.h
     include/engine/tools/property.h
-    include/engine/tools/task.h
-    include/engine/tools/interpolation.h
+    include/engine/tools/tasks/task.h
+    include/engine/tools/tasks/timer.h
+    include/engine/tools/tasks/interpolation.h
 )
 
 set(LIBS

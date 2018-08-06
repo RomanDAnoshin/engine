@@ -7,11 +7,6 @@ GraphicPolygon::GraphicPolygon() :
 
 }
 
-GraphicPolygon::~GraphicPolygon()
-{
-
-}
-
 unsigned GraphicPolygon::GetVerticesCount() const
 {
     return m_vertices.size();

@@ -29,7 +29,7 @@
 #include "widgets/label.h"
 #include "widgets/button.h"
 
-#include "tools/interpolation.h"
+#include "tools/tasks/interpolation.h"
 
 namespace engine
 {
@@ -40,8 +40,6 @@ public:
     Engine();
 
     ~Engine();
-
-    Input& GetInput();
 
     Scene& GetScene();
 
@@ -71,14 +69,15 @@ private:
 
     void handleEvent(ALLEGRO_EVENT& event);
 
+    Renderer    m_renderer;
+    Scene       m_scene;
+
     int     m_width;
     int     m_height;
     float   m_dt;
     float   m_factor;
     bool    m_active;
     bool    m_running;
-
-    Renderer                m_renderer;
 
     ALLEGRO_DISPLAY*        m_display;
     ALLEGRO_EVENT_QUEUE*    m_eventQueue;
@@ -89,9 +88,6 @@ private:
     int             m_ups;
     bool            m_needUpdate;
     bool            m_needRender;
-    Input           m_input;
-
-    Scene   m_scene;
 
     const Cursor*   m_cursor;
 

@@ -1,25 +1,23 @@
 #ifndef INTERPOLATION_H
 #define INTERPOLATION_H
 
-#include "property.h"
-#include "task.h"
+#include "engine/tools/property.h"
+#include "timer.h"
 #include <type_traits>
 
 namespace engine
 {
 
 template<typename arg_type>
-class Lerp : public Task
+class Lerp : public Timer
 {
     using value_type = typename std::decay<arg_type>::type;
 public:
     Lerp(const Property<arg_type>& property, arg_type startValue, arg_type finishValue, float time) :
-        Task(),
+        Timer(time),
         m_property(property),
         m_startValue(startValue),
-        m_finishValue(finishValue),
-        m_totalTime(time),
-        m_currentTime(time)
+        m_finishValue(finishValue)
     {
 
     }
@@ -27,24 +25,20 @@ public:
     Lerp(const Property<arg_type>& property, arg_type finishValue, float time) :
         Lerp(property, property.GetValue(), finishValue, time) { }
 
-    virtual ~Lerp() { }
-
-    virtual void Update(const float dt)
+    void Update(const float dt)
     {
         if (m_finished) {
             return;
         }
-        if ((m_currentTime -= dt) < 0) {
+        if ((m_currentTime += dt) > m_totalTime) {
             Finish();
         }
-        float percent = m_currentTime / m_totalTime;
-        value_type value = m_startValue * percent + m_finishValue * (1.f - percent);
+        float ratio = m_currentTime / m_totalTime;
+        value_type value = lerp(m_startValue, m_finishValue, ratio);
         m_property.SetValue(value);
     }
 
 protected:
-    float               m_totalTime;
-    float               m_currentTime;
     value_type          m_startValue;
     value_type          m_finishValue;
     Property<arg_type>  m_property;

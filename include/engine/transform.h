@@ -50,9 +50,7 @@ public:
 
     const Vector2f& GetScale() const;
 
-    float GetRotationDeg() const;
-
-    float GetRotationRad() const;
+    Angle GetRotation() const;
 
     void SetPosition(const Vector2f& position);
 
@@ -62,31 +60,27 @@ public:
 
     void SetScale(float scaleX, float scaleY);
 
-    void SetRotationDeg(float degrees);
-
-    void SetRotationRad(float radians);
+    void SetRotation(Angle rotation);
 
     Event<const Vector2f&>& EventPositionChanged();
 
     Event<const Vector2f&>& EventScaleChanged();
 
-    Event<float>& EventRotationChanged();
+    Event<Angle>& EventRotationChanged();
 
 protected:
     Vector2f    m_position;
     Vector2f    m_scale;
-    float       m_rotation;
-    Transform   m_transform;
+    Angle       m_rotation;
 
 private:
-    void rebuildTransform();
     void positionChanged();
     void scaleChanged();
     void rotationChanged();
 
     Event<const Vector2f&>  m_positionChanged;
     Event<const Vector2f&>  m_scaleChanged;
-    Event<float>            m_rotationChanged;
+    Event<Angle>            m_rotationChanged;
 };
 
 }

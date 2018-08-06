@@ -23,8 +23,6 @@ enum class VAlignment : unsigned char
     Bottom
 };
 
-class Text;
-
 class Text
 {
 public:

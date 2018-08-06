@@ -42,13 +42,11 @@ class GraphicRoundedRectangle : public GraphicRectangle
 public:
     GraphicRoundedRectangle();
 
-    virtual ~GraphicRoundedRectangle();
-
     float GetRadius() const;
 
     void SetRadius(float radius);
 
-    virtual void Render(Renderer &renderer);
+    void Render(Renderer &renderer);
 
 protected:
     float   m_radius;

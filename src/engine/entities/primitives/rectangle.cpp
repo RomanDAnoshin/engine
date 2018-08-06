@@ -65,11 +65,6 @@ GraphicRoundedRectangle::GraphicRoundedRectangle() :
 
 }
 
-GraphicRoundedRectangle::~GraphicRoundedRectangle()
-{
-
-}
-
 float GraphicRoundedRectangle::GetRadius() const
 {
     return m_radius;

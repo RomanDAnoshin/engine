@@ -7,14 +7,12 @@
 namespace engine
 {
 
-class Animation : public GraphicRectangle
+class FrameAnimation : public GraphicRectangle
 {
 public:
-    Animation(const Bitmap* bitmap = nullptr);
+    FrameAnimation(const Bitmap* bitmap = nullptr);
 
-    Animation(const Bitmap* bitmap, std::initializer_list<IntRect> frames);
-
-    virtual ~Animation();
+    FrameAnimation(const Bitmap* bitmap, std::initializer_list<IntRect> frames);
 
     const Bitmap* GetBitmap() const;
 
@@ -33,6 +31,8 @@ public:
     void SetBitmap(const Bitmap* bitmap);
 
     void SetFrames(std::initializer_list<IntRect> frames);
+
+    void SetFrames(const std::vector<IntRect>& frames);
 
     void AddFrame(const IntRect& frame);
 
@@ -54,9 +54,9 @@ public:
 
     void Stop();
 
-    virtual void Update(const float dt);
+    void Update(const float dt);
 
-    virtual void Render(Renderer& renderer);
+    void Render(Renderer& renderer);
 
 protected:
     const Bitmap*           m_bitmap;

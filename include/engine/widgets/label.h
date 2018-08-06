@@ -39,7 +39,7 @@ public:
     virtual void Render(Renderer& renderer);
 
 protected:
-    virtual void SetLineWidth(unsigned lineWidth);
+    using MultilineText::SetLineWidth;
 
     virtual void boundsChanged(const IntRect& oldValue);
 

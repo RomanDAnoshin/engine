@@ -90,7 +90,7 @@ Transformable::Transformable() :
     m_scale(1.f, 1.f),
     m_rotation(0.f)
 {
-    rebuildTransform();
+
 }
 
 Transformable::~Transformable()
@@ -108,14 +108,9 @@ const Vector2f& Transformable::GetScale() const
     return m_scale;
 }
 
-float Transformable::GetRotationDeg() const
+Angle Transformable::GetRotation() const
 {
     return radiansToDegrees(m_rotation);
-}
-
-float Transformable::GetRotationRad() const
-{
-    return m_rotation;
 }
 
 void Transformable::SetPosition(const Vector2f& position)
@@ -148,18 +143,12 @@ void Transformable::SetScale(float scaleX, float scaleY)
     scaleChanged();
 }
 
-void Transformable::SetRotationDeg(float degrees)
+void Transformable::SetRotation(Angle rotation)
 {
-    float radians = degreesToRadians(degrees);
-    SetRotationRad(radians);
-}
-
-void Transformable::SetRotationRad(float radians)
-{
-    if (m_rotation == radians) {
+    if (m_rotation == rotation) {
         return;
     }
-    m_rotation = radians;
+    m_rotation = rotation;
     rotationChanged();
 }
 
@@ -173,30 +162,22 @@ Event<const Vector2f&>& Transformable::EventScaleChanged()
     return m_scaleChanged;
 }
 
-Event<float>& Transformable::EventRotationChanged()
+Event<Angle>& Transformable::EventRotationChanged()
 {
     return m_rotationChanged;
 }
 
 void Transformable::positionChanged()
 {
-    rebuildTransform();
     m_positionChanged.Invoke(m_position);
 }
 
 void Transformable::scaleChanged()
 {
-    rebuildTransform();
     m_scaleChanged.Invoke(m_scale);
 }
 
 void Transformable::rotationChanged()
 {
-    rebuildTransform();
     m_rotationChanged.Invoke(m_rotation);
-}
-
-void Transformable::rebuildTransform()
-{
-    m_transform.Build(m_position, m_scale, m_rotation);
 }

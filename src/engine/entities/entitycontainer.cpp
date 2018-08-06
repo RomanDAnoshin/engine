@@ -22,13 +22,13 @@ void EntityContainer::AddEntity(Entity* entity, unsigned order)
     AddObject(object, order);
 }
 
-void EntityContainer::RemoveEntity(Entity* entity, bool free)
+void EntityContainer::RemoveEntity(Entity* entity)
 {
     Object* object = dynamic_cast<Object*>(entity);
     if (object == nullptr) {
         throw std::invalid_argument("Invalid entity\n");
     }
-    RemoveObject(object, free);
+    RemoveObject(object);
 }
 
 void EntityContainer::Update(const float dt)

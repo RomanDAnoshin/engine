@@ -76,11 +76,6 @@ void Label::Render(Renderer& renderer)
     }
 }
 
-void Label::SetLineWidth(unsigned lineWidth)
-{
-    MultilineText::SetLineWidth(lineWidth);
-}
-
 void Label::boundsChanged(const IntRect& oldValue)
 {
     Widget::boundsChanged(oldValue);

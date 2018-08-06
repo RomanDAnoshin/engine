@@ -9,6 +9,28 @@
 namespace engine
 {
 
+struct ParticleParameters
+{
+    ParticleParameters() :
+        startRadiusRange(10.f),
+        finishRadiusRange(10.f),
+        velocityRange(50.f),
+        lifetimeRange(1.f),
+        delayRange(0.1f)
+    {
+
+    }
+
+    Vector2<Color>  startColorRange;
+    Vector2<Color>  finishColorRange;
+    Vector2f        startRadiusRange;
+    Vector2f        finishRadiusRange;
+    Vector2f        velocityRange;
+    Vector2f        lifetimeRange;
+    Vector2f        delayRange;
+    Vector2f        gravity;
+};
+
 class ParticleEmitter : public Entity, public Textured
 {
 public:
@@ -16,75 +38,21 @@ public:
 
     virtual ~ParticleEmitter();
 
-    const Vector2f& GetForce() const;
+    size_t GetMaxParticleCount() const;
 
-    const Vector2<Color>& GetStartColor() const;
+    size_t GetAliveParticleCount() const;
 
-    const Vector2<Color>& GetFinishColor() const;
+    bool IsRunning() const;
 
-    const Vector2f& GetStartRadius() const;
+    const ParticleParameters& GetParameters();
 
-    const Vector2f& GetFinishRadius() const;
+    void SetMaxParticleCount(int count);
 
-    const Vector2f& GetVelocity() const;
+    void Play();
 
-    const Vector2f& GetLifetime() const;
+    void Stop();
 
-    const Vector2f& GetPeriod() const;
-
-    size_t GetParticleCount() const;
-
-    bool IsStopped() const;
-
-    bool IsLooped() const;
-
-    void SetForce(const Vector2f& force);
-
-    void SetForce(float forceX, float forceY);
-
-    void SetColor(const Color& color);
-
-    void SetRandomColor(const Vector2<Color>& color);
-
-    void SetRandomColor(const Color& from, const Color& to);
-
-    void SetRadius(float radius);
-
-    void SetRandomRadius(const Vector2f& radius);
-
-    void SetRandomRadius(float from, float to);
-
-    void SetDynamicColor(const Color& start, const Color& finish);
-
-    void SetDynamicRandomColor(const Vector2<Color>& start, const Vector2<Color>& finish);
-
-    void SetDynamicRadius(float start, float finish);
-
-    void SetDynamicRandomRadius(const Vector2f& start, const Vector2f& finish);
-
-    void SetVelocity(float velocity);
-
-    void SetRandomVelocity(const Vector2f& velocity);
-
-    void SetRandomVelocity(float from, float to);
-
-    void SetLifetime(float lifeTime);
-
-    void SetRandomLifetime(const Vector2f& lifeTime);
-
-    void SetRandomLifetime(float from, float to);
-
-    void SetPeriod(float period);
-
-    void SetRandomPeriod(const Vector2f& period);
-
-    void SetRandomPeriod(float from, float to);
-
-    void SetParticleCount(size_t count);
-
-    void SetStopped(bool stopped);
-
-    void SetLooped(bool looped);
+    void SetParameters(const ParticleParameters& parameters);
 
     void Update(const float dt);
 
@@ -93,13 +61,21 @@ public:
 protected:
     struct Particle
     {
-        Vector2f        position;
-        Vector2f        velocity;
-        Vector2<Color>  colorRange;
-        Vector2f        radiusRange;
-        Color           color;
-        float           radius;
-        float           lifetime;
+        ~Particle() {
+            if (color != nullptr) {
+                delete[] color;
+                color = nullptr;
+            }
+            if (radius != nullptr) {
+                delete[] radius;
+                radius = nullptr;
+            }
+        }
+        Vector2f    position;
+        Vector2f    velocity;
+        Color*      color;
+        float*      radius;
+        float       lifetime;
     };
 
     float randomf(float from, float to) {
@@ -110,26 +86,24 @@ protected:
         return from + (std::rand() % (to - from + 1));
     }
 
+    Color randomColor(const Color& from, const Color& to) {
+        return Color(randomi(from.r, to.r),
+                     randomi(from.g, to.g),
+                     randomi(from.b, to.b),
+                     randomi(from.a, to.a));
+    }
+
     virtual void generate(Particle* p) = 0;
 
-    bool            m_dynColor;
-    bool            m_dynRadius;
-    Vector2<Color>  m_startColor;
-    Vector2<Color>  m_finishColor;
-    Vector2f        m_startRadius;
-    Vector2f        m_finishRadius;
-    Vector2f        m_velocity;
-    Vector2f        m_lifetime;
-    Vector2f        m_force;
-    Vector2f        m_period;
-    float           m_timeToEmit;
-    size_t          m_count;
-    size_t          m_deadCount;
-    bool            m_looped;
-    bool            m_stopped;
-
+    ParticleParameters      m_parameters;
     std::list<Particle*>    m_alive;
     std::list<Particle*>    m_dead;
+
+    size_t          m_maxCount;
+    float           m_timeToEmit;
+    bool            m_running;
+    bool            m_dynamicColor;
+    bool            m_dynamicRadius;
 };
 
 
@@ -138,26 +112,18 @@ class PointParticleEmitter : public ParticleEmitter
 public:
     PointParticleEmitter();
 
-    Vector2f GetAngleDeg() const;
+    const Vector2<Angle>& GetAngle() const;
 
-    const Vector2f& GetAngleRad() const;
+    void SetAngle(Angle angle);
 
-    void SetAngleDeg(float degrees);
+    void SetRandomAngle(const Vector2<Angle>& angle);
 
-    void SetAngleRad(float radians);
-
-    void SetRandomAngleDeg(const Vector2f& degrees);
-
-    void SetRandomAngleRad(const Vector2f& radians);
-
-    void SetRandomAngleDeg(float from, float to);
-
-    void SetRandomAngleRad(float from, float to);
+    void SetRandomAngle(Angle from, Angle to);
 
 private:
     void generate(Particle* p);
 
-    Vector2f    m_angle;
+    Vector2<Angle>  m_angle;
 };
 
 
@@ -170,9 +136,7 @@ public:
 
     const Vector2f& GetPointB() const;
 
-    float GetAngleDeg() const;
-
-    float GetAngleRad() const;
+    Angle GetAngle() const;
 
     void SetPointA(const Vector2f& a);
 
@@ -180,9 +144,7 @@ public:
 
     void SetSegment(const Vector2f& a, const Vector2f& b);
 
-    void SetAngleDeg(float degrees);
-
-    void SetAngleRad(float radians);
+    void SetAngle(Angle angle);
 
 private:
     void generate(Particle* p);
@@ -190,7 +152,7 @@ private:
     Vector2f    m_a;
     Vector2f    m_b;
     Vector2f    m_normal;
-    float       m_angle;
+    Angle       m_angle;
 };
 
 }

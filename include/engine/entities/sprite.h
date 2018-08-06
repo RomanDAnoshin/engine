@@ -12,9 +12,7 @@ class Sprite : public GraphicRectangle, public Textured
 public:
     Sprite(const Bitmap* bitmap = nullptr);
 
-    virtual ~Sprite();
-
-    virtual void Render(Renderer& renderer);
+    void Render(Renderer& renderer);
 };
 
 }

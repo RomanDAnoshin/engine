@@ -18,7 +18,7 @@ public:
 
     void AddEntity(Entity* entity, unsigned order = -1);
 
-    void RemoveEntity(Entity *entity, bool free);
+    void RemoveEntity(Entity *entity);
 
     virtual void Update(const float dt);
 

@@ -11,6 +11,7 @@ struct Vector2
 {
     Vector2() : x(T()), y(T()) { }
     Vector2(const T& x, const T& y) : x(x), y(y) { }
+    Vector2(const T& value) : x(value), y(value) { }
 
     void Sort() {
         if (x > y) {
@@ -130,6 +131,9 @@ struct Color
     Color(unsigned char r, unsigned char g, unsigned char b, unsigned char a = 255) :
         r(r), g(g), b(b), a(a) { }
 
+    Color(const Color& color) :
+        r(color.r), g(color.g), b(color.b), a(color.a) { }
+
     unsigned char r, g, b, a;
 };
 
@@ -205,6 +209,37 @@ struct BorderStyle
     float thickness;
     bool visible;
 };
+
+struct Angle
+{
+    Angle(float radians) : m_radians(radians) { }
+    static Angle FromRadians(float radians) { return Angle(radians); }
+    static Angle FromDegrees(float degrees) { return Angle(degreesToRadians(degrees)); }
+
+    float GetRadians() const { return m_radians; }
+    float GetDegrees() const { return radiansToDegrees(m_radians); }
+    void SetRadians(float radians) { m_radians = radians; }
+    void SetDegrees(float degrees) { m_radians = degreesToRadians(degrees); }
+    operator float() const { return m_radians; }
+
+private:
+    float m_radians;
+};
+
+template <typename T>
+inline T lerp(const T& a, const T& b, float ratio) {
+    return a + (b - a) * ratio;
+}
+
+template <>
+inline Color lerp<Color>(const Color& a, const Color& b, float ratio) {
+    return Color(
+                a.r + (b.r - a.r) * ratio,
+                a.g + (b.g - a.g) * ratio,
+                a.b + (b.b - a.b) * ratio,
+                a.a + (b.a - a.a) * ratio
+                );
+}
 
 }
 

@@ -18,6 +18,8 @@ enum class KEYBOARD : unsigned char
     E,
     W,
     S,
+    A,
+    D,
     ESC
 };
 
@@ -31,32 +33,36 @@ enum class MOUSE : unsigned char
 class Input
 {
 public:
+
+    static void HandleEvent(ALLEGRO_EVENT& event);
+
+    static bool IsKeyPressed(KEYBOARD key);
+
+    static bool IsMouseButtonPressed(MOUSE button);
+
+    static Vector2i GetMousePosition();
+
+    static Event<KEYBOARD>& EventKeyPressed();
+
+    static Event<KEYBOARD>& EventKeyReleased();
+
+    static Event<MOUSE>& EventMousePressed();
+
+    static Event<MOUSE>& EventMouseReleased();
+
+private:
     Input();
 
-    void HandleEvent(ALLEGRO_EVENT& event);
+    static void setKeyPressed(KEYBOARD key, bool state);
 
-    bool IsKeyPressed(KEYBOARD key) const;
+    static void setMousePressed(MOUSE button, bool state);
 
-    bool IsMouseButtonPressed(MOUSE button) const;
-
-    Vector2i GetMousePosition() const;
-
-    Event<KEYBOARD> OnKeyPressed;
-
-    Event<KEYBOARD> OnKeyReleased;
-
-    Event<MOUSE> OnMousePressed;
-
-    Event<MOUSE> OnMouseReleased;
-
-protected:
-    void setKeyPressed(KEYBOARD key, bool state);
-
-    void setMousePressed(MOUSE button, bool state);
-
-    bool    m_keys[9] = {0};
-    bool    m_mouse[3] = {0};
-
+    static bool             m_keys[11];
+    static bool             m_mouse[3];
+    static Event<KEYBOARD>  m_keyPressed;
+    static Event<KEYBOARD>  m_keyReleased;
+    static Event<MOUSE>     m_mousePressed;
+    static Event<MOUSE>     m_mouseReleased;
 };
 
 }

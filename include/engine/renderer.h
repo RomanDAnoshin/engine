@@ -31,6 +31,8 @@ public:
 
     void SetScalingFactor(const Vector2f& factor);
 
+    void DrawBitmap(const Bitmap* bitmap, const IntRect& source, const FloatRect& dest) const;
+
     void DrawBitmap(const Bitmap* bitmap, const IntRect& source, const FloatRect& dest, const Color& color = Color()) const;
 
     void DrawText(const Font* font, const std::string& text, const Vector2f& position, HAlignment align, const Color& color) const;

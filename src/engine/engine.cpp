@@ -26,11 +26,6 @@ Engine::~Engine()
     Cleanup();
 }
 
-Input& Engine::GetInput()
-{
-    return m_input;
-}
-
 Scene& Engine::GetScene()
 {
     return m_scene;
@@ -65,8 +60,9 @@ void Engine::Start()
 
         ALLEGRO_EVENT e;
 
-        while (al_get_next_event(m_eventQueue, &e))
+        while (al_get_next_event(m_eventQueue, &e)) {
             handleEvent(e);
+        }
 
         if (m_needUpdate) {
             m_needUpdate = false;
@@ -189,7 +185,7 @@ void Engine::render()
 
 void Engine::handleEvent(ALLEGRO_EVENT& event)
 {
-    m_input.HandleEvent(event);
+    Input::HandleEvent(event);
     m_scene.HandleEvent(event);
 
     switch (event.type) {

@@ -4,248 +4,93 @@ using namespace engine;
 ParticleEmitter::ParticleEmitter():
     Entity(),
     Textured(),
-    m_dynColor(false),
-    m_dynRadius(false),
-    m_startRadius(10.f, 10.f),
-    m_finishRadius(10.f, 10.f),
-    m_velocity(50.f, 50.f),
-    m_lifetime(1.f, 1.f),
-    m_period(0.1f, 0.1f),
-    m_timeToEmit(0.1f),
-    m_count(10),
-    m_deadCount(0),
-    m_looped(true),
-    m_stopped(false)
+    m_maxCount(0),
+    m_timeToEmit(m_parameters.delayRange.x),
+    m_running(true),
+    m_dynamicColor(false),
+    m_dynamicRadius(false)
 {
-
+    SetMaxParticleCount(10);
 }
 
 ParticleEmitter::~ParticleEmitter()
 {
-    for (Particle* p : m_alive)
+    for (Particle* p : m_alive) {
         delete p;
-    m_alive.clear();
-    for (Particle* p : m_dead)
-        delete p;
-    m_dead.clear();
-}
-
-const Vector2f& ParticleEmitter::GetForce() const
-{
-    return m_force;
-}
-
-const Vector2<Color>& ParticleEmitter::GetStartColor() const
-{
-    return m_startColor;
-}
-
-const Vector2<Color>& ParticleEmitter::GetFinishColor() const
-{
-    if (m_dynColor == true)
-        return m_finishColor;
-    else
-        return m_startColor;
-}
-
-const Vector2f& ParticleEmitter::GetStartRadius() const
-{
-    return m_startRadius;
-}
-
-const Vector2f& ParticleEmitter::GetFinishRadius() const
-{
-    if (m_dynRadius == true)
-        return m_finishRadius;
-    else
-        return m_startRadius;
-}
-
-const Vector2f& ParticleEmitter::GetVelocity() const
-{
-    return m_velocity;
-}
-
-const Vector2f& ParticleEmitter::GetLifetime() const
-{
-    return m_lifetime;
-}
-
-const Vector2f& ParticleEmitter::GetPeriod() const
-{
-    return m_period;
-}
-
-size_t ParticleEmitter::GetParticleCount() const
-{
-    return m_count;
-}
-
-bool ParticleEmitter::IsStopped() const
-{
-    return m_stopped;
-}
-
-bool ParticleEmitter::IsLooped() const
-{
-    return m_looped;
-}
-
-void ParticleEmitter::SetForce(const Vector2f& force)
-{
-    m_force = force;
-}
-
-void ParticleEmitter::SetForce(float forceX, float forceY)
-{
-    m_force = Vector2f(forceX, forceY);
-}
-
-void ParticleEmitter::SetColor(const Color& color)
-{
-    m_startColor = Vector2<Color>(color, color);
-    m_dynColor = false;
-}
-
-void ParticleEmitter::SetRandomColor(const Vector2<Color>& color)
-{
-    m_startColor = color;
-    m_dynColor = false;
-}
-
-void ParticleEmitter::SetRandomColor(const Color &from, const Color &to)
-{
-    m_startColor = Vector2<Color>(from, to);
-    m_dynColor = false;
-}
-
-void ParticleEmitter::SetRadius(float radius)
-{
-    m_startRadius = Vector2f(radius, radius);
-    m_dynRadius = false;
-}
-
-void ParticleEmitter::SetRandomRadius(const Vector2f& radius)
-{
-    m_startRadius = radius;
-    m_startRadius.Sort();
-    m_dynRadius = false;
-}
-
-void ParticleEmitter::SetRandomRadius(float from, float to)
-{
-    m_startRadius = Vector2f(from, to);
-    m_startRadius.Sort();
-    m_dynRadius = false;
-}
-
-void ParticleEmitter::SetDynamicColor(const Color& start, const Color& finish)
-{
-    m_startColor = Vector2<Color>(start, start);
-    m_finishColor = Vector2<Color>(finish, finish);
-    m_dynColor = true;
-}
-
-void ParticleEmitter::SetDynamicRandomColor(const Vector2<Color>& start, const Vector2<Color>& finish)
-{
-    m_startColor = start;
-    m_finishColor = finish;
-    m_dynColor = true;
-}
-
-void ParticleEmitter::SetDynamicRadius(float start, float finish)
-{
-    m_startRadius = Vector2f(start, start);
-    m_finishRadius = Vector2f(finish, finish);
-    m_dynRadius = true;
-}
-
-void ParticleEmitter::SetDynamicRandomRadius(const Vector2f& start, const Vector2f& finish)
-{
-    m_startRadius = start;
-    m_startRadius.Sort();
-    m_finishRadius = finish;
-    m_finishRadius.Sort();
-    m_dynRadius = true;
-}
-
-void ParticleEmitter::SetVelocity(float velocity)
-{
-    m_velocity = Vector2f(velocity, velocity);
-}
-
-void ParticleEmitter::SetRandomVelocity(const Vector2f& velocity)
-{
-    m_velocity = velocity;
-    m_velocity.Sort();
-}
-
-void ParticleEmitter::SetRandomVelocity(float from, float to)
-{
-    m_velocity = Vector2f(from, to);
-    m_velocity.Sort();
-}
-
-void ParticleEmitter::SetLifetime(float lifeTime)
-{
-    m_lifetime = Vector2f(lifeTime, lifeTime);
-}
-
-void ParticleEmitter::SetRandomLifetime(const Vector2f& lifeTime)
-{
-    m_lifetime = lifeTime;
-    m_lifetime.Sort();
-}
-
-void ParticleEmitter::SetRandomLifetime(float from, float to)
-{
-    m_lifetime = Vector2f(from, to);
-    m_lifetime.Sort();
-}
-
-void ParticleEmitter::SetPeriod(float period)
-{
-    m_period = Vector2f(period, period);
-    m_timeToEmit = period;
-}
-
-void ParticleEmitter::SetRandomPeriod(const Vector2f& period)
-{
-    m_period = period;
-    m_period.Sort();
-    m_timeToEmit = randomf(m_period.x, m_period.y);
-}
-
-void ParticleEmitter::SetRandomPeriod(float from, float to)
-{
-    m_period = Vector2f(from, to);
-    m_period.Sort();
-    m_timeToEmit = randomf(m_period.x, m_period.y);
-}
-
-void ParticleEmitter::SetParticleCount(size_t count)
-{
-    for (Particle* p : m_alive)
-        delete p;
-    m_alive.clear();
-    for (Particle* p : m_dead)
-        delete p;
-    m_dead.clear();
-    for (size_t i = 0; i < count; ++i) {
-        m_dead.push_back(new Particle());
     }
-    m_count = count;
-    m_timeToEmit = randomf(m_period.x, m_period.y);
+    m_alive.clear();
+    for (Particle* p : m_dead) {
+        delete p;
+    }
+    m_dead.clear();
+    m_maxCount = 0;
 }
 
-void ParticleEmitter::SetStopped(bool stopped)
+size_t ParticleEmitter::GetMaxParticleCount() const
 {
-    m_stopped = stopped;
+    return m_maxCount;
 }
 
-void ParticleEmitter::SetLooped(bool looped)
+size_t ParticleEmitter::GetAliveParticleCount() const
 {
-    m_looped = looped;
+    return m_alive.size();
+}
+
+bool ParticleEmitter::IsRunning() const
+{
+    return m_running;
+}
+
+const ParticleParameters& ParticleEmitter::GetParameters()
+{
+    return m_parameters;
+}
+
+void ParticleEmitter::SetMaxParticleCount(int count)
+{
+    if (count < 0) {
+        count = 0;
+    }
+    if (m_maxCount == count) {
+        return;
+    }
+    if (m_maxCount < count) {
+        for (size_t i = 0; i < count - m_maxCount; ++i) {
+            m_dead.push_back(new Particle());
+        }
+    } else {
+        int popCount = m_maxCount - count;
+        while (popCount > 0 && m_dead.size() > 0) {
+            popCount--;
+            Particle* p = m_dead.back();
+            delete p;
+            m_dead.pop_back();
+        }
+        while (popCount > 0 && m_alive.size() > 0) {
+            popCount--;
+            Particle* p = m_alive.back();
+            delete p;
+            m_alive.pop_back();
+        }
+    }
+    m_maxCount = count;
+}
+
+void ParticleEmitter::Play()
+{
+    m_running = true;
+}
+
+void ParticleEmitter::Stop()
+{
+    m_running = false;
+}
+
+void ParticleEmitter::SetParameters(const ParticleParameters& parameters)
+{
+    m_parameters = parameters;
+    m_dynamicColor = m_parameters.startColorRange != m_parameters.finishColorRange;
+    m_dynamicRadius = m_parameters.startRadiusRange != m_parameters.finishRadiusRange;
 }
 
 void ParticleEmitter::Update(const float dt)
@@ -255,57 +100,77 @@ void ParticleEmitter::Update(const float dt)
         Particle* p = (*i);
         p->lifetime -= dt;
         if (p->lifetime <= 0) {
-            if (!m_looped && !m_stopped)
-                m_deadCount+=1;
             m_dead.push_back(p);
             i = m_alive.erase(i);
+            if (m_dynamicColor) {
+                if (p->color != nullptr) {
+                    delete[] p->color;
+                    p->color = nullptr;
+                }
+            }
+            if (m_dynamicRadius) {
+                if (p->radius != nullptr) {
+                    delete[] p->radius;
+                    p->radius = nullptr;
+                }
+            }
             continue;
         }
-        p->velocity += m_force * dt;
+        p->velocity += m_parameters.gravity * dt;
         p->position += p->velocity * dt;
 
-        float ratio = p->lifetime / m_lifetime.y;
+        float ratio = p->lifetime / m_parameters.lifetimeRange.y;
 
-        if (m_dynColor) {
-            p->color.r = p->colorRange.y.r - (p->colorRange.y.r - p->colorRange.x.r) * ratio;
-            p->color.g = p->colorRange.y.g - (p->colorRange.y.g - p->colorRange.x.g) * ratio;
-            p->color.b = p->colorRange.y.b - (p->colorRange.y.b - p->colorRange.x.b) * ratio;
-            p->color.a = p->colorRange.y.a - (p->colorRange.y.a - p->colorRange.x.a) * ratio;
+        if (m_dynamicColor) {
+            p->color[0] = lerp(p->color[2], p->color[1], ratio);
         }
-        if (m_dynRadius)
-            p->radius = p->radiusRange.y - (p->radiusRange.y - p->radiusRange.x) * ratio;
+        if (m_dynamicRadius) {
+            p->radius[0] = p->radius[2] + (p->radius[1] - p->radius[2]) * ratio;
+        }
+    }
+    if (!m_running) {
+        return;
     }
     m_timeToEmit -= dt;
-    if (!m_looped && (m_deadCount >= m_count)) {
-        m_stopped = true;
-        m_deadCount = 0;
-    }
-    while (m_timeToEmit <= 0 && !m_dead.empty() && !m_stopped) {
+    while (m_timeToEmit <= 0 && !m_dead.empty()) {
         Particle* p = m_dead.back();
         m_dead.pop_back();
 
         p->position = Vector2f(0.f, 0.f);
 
-        p->colorRange.x = Color(randomi(m_startColor.x.r, m_startColor.y.r),
-                                randomi(m_startColor.x.g, m_startColor.y.g),
-                                randomi(m_startColor.x.b, m_startColor.y.b),
-                                randomi(m_startColor.x.a, m_startColor.y.a));
-        p->colorRange.y = Color(randomi(m_finishColor.x.r, m_finishColor.y.r),
-                                randomi(m_finishColor.x.g, m_finishColor.y.g),
-                                randomi(m_finishColor.x.b, m_finishColor.y.b),
-                                randomi(m_finishColor.x.a, m_finishColor.y.a));
-        p->color = p->colorRange.x;
+        if (m_dynamicColor) {
+            p->color = new Color[3];
+            p->color[1] = randomColor(m_parameters.startColorRange.x,
+                                      m_parameters.startColorRange.y);
+            p->color[2] = randomColor(m_parameters.finishColorRange.x,
+                                      m_parameters.finishColorRange.y);
+            p->color[0] = p->color[1];
+        } else {
+            p->color = new Color[1];
+            p->color[0] = randomColor(m_parameters.startColorRange.x,
+                                      m_parameters.startColorRange.y);
+        }
 
-        p->radiusRange.x = randomf(m_startRadius.x, m_startRadius.y);
-        p->radiusRange.y = randomf(m_finishRadius.x, m_finishRadius.y);
-        p->radius = p->radiusRange.x;
+        if (m_dynamicRadius) {
+            p->radius = new float[3];
+            p->radius[1] = randomf(m_parameters.startRadiusRange.x,
+                                   m_parameters.startRadiusRange.y);
+            p->radius[2] = randomf(m_parameters.finishRadiusRange.x,
+                                   m_parameters.finishRadiusRange.y);
+            p->radius[0] = p->radius[1];
+        } else {
+            p->radius = new float[1];
+            p->radius[0] = randomf(m_parameters.startRadiusRange.x,
+                                   m_parameters.startRadiusRange.y);
+        }
 
-        p->lifetime = randomf(m_lifetime.x, m_lifetime.y);
+        p->lifetime = randomf(m_parameters.lifetimeRange.x,
+                              m_parameters.lifetimeRange.y);
 
         generate(p);
 
         m_alive.push_back(p);
-        m_timeToEmit += randomf(m_period.x, m_period.y);
+        m_timeToEmit += randomf(m_parameters.delayRange.x, m_parameters.delayRange.y);
     }
 }
 
@@ -315,72 +180,49 @@ void ParticleEmitter::Render(Renderer& renderer)
         return;
     }
     prepareRenderer(renderer);
-    Transform transform = renderer.GetTransform();
-    for (Particle* i : m_alive) {
-        Transform tr(i->position, Vector2f(1.f, 1.f), 0.f);
-        tr.Compose(transform);
-        renderer.SetTransform(tr);
-        float r = i->radius;
+    for (auto it = m_alive.begin(); it != m_alive.end(); ++it) {
+        Particle* p = (*it);
+        float r = p->radius[0];
         float r2 = r * 2;
-        FloatRect dst({-r, -r}, {r2, r2});
-        renderer.DrawBitmap(m_bitmap, m_source, dst, i->color);
+        FloatRect dst(p->position.x - r, p->position.y - r, r2, r2);
+        renderer.DrawBitmap(m_bitmap, m_source, dst, p->color[0]);
     }
 }
 
 PointParticleEmitter::PointParticleEmitter() :
-    m_angle(0.f, 360.f * 0.0174532925f)
+    m_angle(Angle::FromDegrees(0.f), Angle::FromDegrees(360.f))
 {
 
 }
 
-Vector2f PointParticleEmitter::GetAngleDeg() const
-{
-    return m_angle * 57.2957795f;
-}
-
-const Vector2f& PointParticleEmitter::GetAngleRad() const
+const Vector2<Angle>& PointParticleEmitter::GetAngle() const
 {
     return m_angle;
 }
 
-void PointParticleEmitter::SetAngleDeg(float degrees)
+void PointParticleEmitter::SetAngle(Angle angle)
 {
-    m_angle = Vector2f(degrees, degrees) * 0.0174532925f;
+    m_angle = Vector2<Angle>(angle, angle);
 }
 
-void PointParticleEmitter::SetAngleRad(float radians)
+void PointParticleEmitter::SetRandomAngle(const Vector2<Angle>& angle)
 {
-    m_angle = Vector2f(radians, radians);
+    SetRandomAngle(angle.x, angle.y);
 }
 
-void PointParticleEmitter::SetRandomAngleDeg(const Vector2f& degrees)
+void PointParticleEmitter::SetRandomAngle(Angle from, Angle to)
 {
-    m_angle = degrees * 0.0174532925f;
+    m_angle.x = from;
+    m_angle.y = to;
     m_angle.Sort();
 }
 
-void PointParticleEmitter::SetRandomAngleRad(const Vector2f& radians)
-{
-    m_angle = radians;
-    m_angle.Sort();
-}
-
-void PointParticleEmitter::SetRandomAngleDeg(float from, float to)
-{
-    m_angle = Vector2f(from, to) * 0.0174532925f;
-    m_angle.Sort();
-}
-
-void PointParticleEmitter::SetRandomAngleRad(float from, float to)
-{
-    m_angle = Vector2f(from, to);
-    m_angle.Sort();
-}
 
 void PointParticleEmitter::generate(Particle* p)
 {
     float angle = randomf(m_angle.x, m_angle.y);
-    float vel = randomf(m_velocity.x, m_velocity.y);
+    float vel = randomf(m_parameters.velocityRange.x,
+                        m_parameters.velocityRange.y);
     p->velocity = Vector2f(std::cos(angle) * vel, std::sin(angle) * vel);
 }
 
@@ -388,7 +230,7 @@ LinearParticleEmitter::LinearParticleEmitter() :
     m_a(10.f, 0.f),
     m_b(-10.f, 0.f),
     m_normal(0.f, -1.f),
-    m_angle(-90.f * 0.0174532925f)
+    m_angle(Angle::FromDegrees(-90))
 {
 
 }
@@ -403,12 +245,7 @@ const Vector2f& LinearParticleEmitter::GetPointB() const
     return m_b;
 }
 
-float LinearParticleEmitter::GetAngleDeg() const
-{
-    return m_angle * 57.2957795f;
-}
-
-float LinearParticleEmitter::GetAngleRad() const
+Angle LinearParticleEmitter::GetAngle() const
 {
     return m_angle;
 }
@@ -429,20 +266,12 @@ void LinearParticleEmitter::SetSegment(const Vector2f& a, const Vector2f& b)
     m_b = b;
 }
 
-void LinearParticleEmitter::SetAngleDeg(float degrees)
+void LinearParticleEmitter::SetAngle(Angle angle)
 {
-    float radians = degrees * 0.0174532925f;
-    if (m_angle == radians)
+    if (m_angle == angle) {
         return;
-    m_angle = degrees * 0.0174532925f;
-    m_normal = Vector2f(std::cos(m_angle), std::sin(m_angle));
-}
-
-void LinearParticleEmitter::SetAngleRad(float radians)
-{
-    if (m_angle == radians)
-        return;
-    m_angle = radians;
+    }
+    m_angle = angle;
     m_normal = Vector2f(std::cos(m_angle), std::sin(m_angle));
 }
 
@@ -451,6 +280,7 @@ void LinearParticleEmitter::generate(Particle* p)
     float r = randomf(0.f, 1.f);
     p->position += Vector2f(m_a.x + (m_b.x - m_a.x) * r,
                             m_a.y + (m_b.y - m_a.y) * r);
-    float vel = randomf(m_velocity.x, m_velocity.y);
+    float vel = randomf(m_parameters.velocityRange.x,
+                        m_parameters.velocityRange.y);
     p->velocity = m_normal * vel;
 }

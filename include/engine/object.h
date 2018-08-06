@@ -2,7 +2,7 @@
 #define OBJECT_H
 
 #include "renderer.h"
-#include "tools/task.h"
+#include "tools/tasks/task.h"
 #include "tools/property.h"
 #include <string>
 #include <vector>
@@ -43,6 +43,8 @@ public:
 
     const std::list<Task*>& GetTasks() const;
 
+    void ClearTasks();
+
     virtual void Update(const float dt);
 
     static Object* GetObject(const std::string& name);
@@ -68,11 +70,11 @@ public:
 
     const std::vector<Object*>& GetObjects() const;
 
-    void Clear(bool free = false);
+    void Clear();
 
     void AddObject(Object* object, unsigned order = -1);
 
-    void RemoveObject(Object* object, bool free = false);
+    void RemoveObject(Object* object);
 
     void ChangeOrder(Object* object, unsigned order);
 
