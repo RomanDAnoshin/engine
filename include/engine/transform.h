@@ -1,8 +1,8 @@
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
 
-#include "globals.h"
-#include "tools/event.h"
+#include "common/event.h"
+#include "common/angle.h"
 #include <allegro5/allegro.h>
 
 namespace engine

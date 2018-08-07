@@ -8,11 +8,6 @@ EntityContainer::EntityContainer() :
 
 }
 
-EntityContainer::~EntityContainer()
-{
-
-}
-
 void EntityContainer::AddEntity(Entity* entity, unsigned order)
 {
     Object* object = dynamic_cast<Object*>(entity);

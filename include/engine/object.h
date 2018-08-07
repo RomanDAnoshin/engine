@@ -2,8 +2,8 @@
 #define OBJECT_H
 
 #include "renderer.h"
-#include "tools/tasks/task.h"
-#include "tools/property.h"
+#include "tasks/task.h"
+#include "common/property.h"
 #include <string>
 #include <vector>
 #include <map>

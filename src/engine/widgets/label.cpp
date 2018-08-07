@@ -62,7 +62,7 @@ void Label::Render(Renderer& renderer)
               m_bounds.size.x - m_margin.left - m_margin.right,
               m_bounds.size.y - m_margin.top - m_margin.bottom);
 
-    IntRect res = a.Intersection(b);
+    IntRect res = a.GetIntersection(b);
     renderer.SetClippingRectangle(res);
     int x = m_point.x + absPos.x;
     int y = m_point.y + absPos.y;

@@ -15,6 +15,10 @@ set(SOURCES
     src/engine/scene.cpp
     src/engine/renderer.cpp
     src/engine/transform.cpp
+    src/engine/common/math.cpp
+    src/engine/common/angle.cpp
+    src/engine/common/color.cpp
+    src/engine/common/borderstyle.cpp
     src/engine/text/text.cpp
     src/engine/text/font.cpp
     src/engine/entities/entity.cpp
@@ -37,7 +41,6 @@ set(SOURCES
 
 set(HEADERS
     include/engine/engine.h
-    include/engine/globals.h
     include/engine/texture.h
     include/engine/physics.h
     include/engine/input.h
@@ -45,6 +48,15 @@ set(HEADERS
     include/engine/scene.h
     include/engine/renderer.h
     include/engine/transform.h
+    include/engine/common/math.h
+    include/engine/common/angle.h
+    include/engine/common/vector2.h
+    include/engine/common/rect.h
+    include/engine/common/color.h
+    include/engine/common/borderstyle.h
+    include/engine/common/delegate.h
+    include/engine/common/event.h
+    include/engine/common/property.h
     include/engine/text/text.h
     include/engine/text/font.h
     include/engine/entities/entity.h
@@ -64,12 +76,9 @@ set(HEADERS
     include/engine/widgets/button.h
     include/engine/widgets/mousearea.h
     include/engine/object.h
-    include/engine/tools/delegate.h
-    include/engine/tools/event.h
-    include/engine/tools/property.h
-    include/engine/tools/tasks/task.h
-    include/engine/tools/tasks/timer.h
-    include/engine/tools/tasks/interpolation.h
+    include/engine/tasks/task.h
+    include/engine/tasks/timer.h
+    include/engine/tasks/interpolation.h
 )
 
 set(LIBS

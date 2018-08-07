@@ -8,11 +8,6 @@ WidgetContainer::WidgetContainer() :
 
 }
 
-WidgetContainer::~WidgetContainer()
-{
-
-}
-
 void WidgetContainer::AddWidget(Widget* widget, unsigned order)
 {
     Object* object = dynamic_cast<Object*>(widget);

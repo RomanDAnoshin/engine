@@ -13,7 +13,7 @@ class Scene
 public:
     Scene();
 
-    virtual ~Scene();
+    virtual ~Scene() = default;
 
     EntityContainer& GetRootEntity();
 

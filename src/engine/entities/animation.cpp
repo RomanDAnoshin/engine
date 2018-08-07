@@ -2,14 +2,14 @@
 using namespace engine;
 
 FrameAnimation::FrameAnimation(const Bitmap* bitmap) :
-    m_bitmap(bitmap),
-    m_current(-1),
     m_frameRange(0, 0),
-    m_running(false),
-    m_looped(false),
+    m_bitmap(bitmap),
     m_currentTime(0.f),
     m_delay(0.f),
-    m_direction(1)
+    m_current(-1),
+    m_direction(1),
+    m_running(false),
+    m_looped(false)
 {
 
 }
@@ -95,15 +95,15 @@ void FrameAnimation::ClearFrames()
 void FrameAnimation::SetCurrentFrame(size_t frame)
 {
     if (m_frames.empty()) {
-        m_current = clamp(frame, m_frameRange.x, m_frameRange.y);
+        m_current = math::clamp(frame, m_frameRange.x, m_frameRange.y);
     }
 }
 
 void FrameAnimation::SetFrameRange(size_t start, size_t finish)
 {
-    m_frameRange.x = clamp(start, size_t(0), m_frames.size() - 1);
-    m_frameRange.y = clamp(finish, size_t(0), m_frames.size() - 1);
-    m_current = m_frames.empty() ? -1 : clamp(size_t(m_current), m_frameRange.x, m_frameRange.y);
+    m_frameRange.x = math::clamp(start, size_t(0), m_frames.size() - 1);
+    m_frameRange.y = math::clamp(finish, size_t(0), m_frames.size() - 1);
+    m_current = m_frames.empty() ? -1 : math::clamp(size_t(m_current), m_frameRange.x, m_frameRange.y);
     m_direction = m_frameRange.x > m_frameRange.y ? -1 : 1;
 }
 

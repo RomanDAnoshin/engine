@@ -8,10 +8,7 @@ Entity::Entity() :
     
 }
 
-Entity::~Entity()
-{
-
-}
+Entity::~Entity() = default;
 
 void Entity::Update(const float dt)
 {

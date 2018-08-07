@@ -2,6 +2,7 @@
 #define PRIMITIVE_H
 
 #include "engine/entities/entity.h"
+#include "engine/common/borderstyle.h"
 
 namespace engine
 {

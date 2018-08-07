@@ -7,10 +7,7 @@ GraphicPrimitive::GraphicPrimitive() :
 
 }
 
-GraphicPrimitive::~GraphicPrimitive()
-{
-
-}
+GraphicPrimitive::~GraphicPrimitive() = default;
 
 const Color& GraphicPrimitive::GetColor() const
 {

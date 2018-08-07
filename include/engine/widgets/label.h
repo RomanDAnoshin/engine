@@ -22,6 +22,8 @@ class Label : public Widget, public MultilineText
 public:
     Label(const std::string& text = "Label", const Font& font = *Font::GetBaseFont());
 
+    virtual ~Label() = default;
+
     const Margin& GetMargin() const;
 
     bool IsMultiline() const;

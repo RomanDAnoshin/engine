@@ -8,11 +8,6 @@ GraphicRectangle::GraphicRectangle() :
 
 }
 
-GraphicRectangle::~GraphicRectangle()
-{
-
-}
-
 const Vector2f& GraphicRectangle::GetSize() const
 {
     return m_size;

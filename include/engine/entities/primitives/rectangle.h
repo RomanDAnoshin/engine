@@ -11,7 +11,7 @@ class GraphicRectangle : public GraphicPrimitive
 public:
     GraphicRectangle();
 
-    virtual ~GraphicRectangle();
+    virtual ~GraphicRectangle() = default;
 
     const Vector2f& GetSize() const;
 

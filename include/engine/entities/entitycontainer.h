@@ -11,7 +11,7 @@ class EntityContainer : public Entity, private Container
 public:
     EntityContainer();
 
-    virtual ~EntityContainer();
+    virtual ~EntityContainer() = default;
 
     using Container::GetObjects;
     using Container::Clear;

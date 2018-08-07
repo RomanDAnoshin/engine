@@ -1,7 +1,6 @@
 #ifndef PHYSICS_H
 #define PHYSICS_H
 
-#include "globals.h"
 #include "entities/entity.h"
 #include <vector>
 #include <Box2D/Box2D.h>
@@ -12,8 +11,7 @@ namespace engine
 class Physics
 {
 public:
-    Physics();
-
+    virtual ~Physics() = default;
     virtual void Update(const float dt) = 0;
 };
 

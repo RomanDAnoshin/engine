@@ -1,6 +1,7 @@
 #ifndef PARTICLES_H
 #define PARTICLES_H
 
+#include "engine/common/math.h"
 #include "engine/texture.h"
 #include "entity.h"
 #include <list>

@@ -11,8 +11,6 @@ template <typename... arg_types>
 class Event
 {
 public:
-    Event() { }
-
     void ConnectStdFunction(const std::function<void(arg_types...)>& func,
                             const std::string& name = std::string())
     {

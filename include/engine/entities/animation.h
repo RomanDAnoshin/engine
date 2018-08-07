@@ -1,6 +1,7 @@
 #ifndef ANIMATION_H
 #define ANIMATION_H
 
+#include "engine/common/math.h"
 #include "primitives/rectangle.h"
 #include "engine/texture.h"
 
@@ -59,15 +60,15 @@ public:
     void Render(Renderer& renderer);
 
 protected:
-    const Bitmap*           m_bitmap;
     std::vector<IntRect>    m_frames;
-    int                     m_current;
     Vector2<size_t>         m_frameRange;
-    bool                    m_running;
-    bool                    m_looped;
+    const Bitmap*           m_bitmap;
     float                   m_currentTime;
     float                   m_delay;
+    int                     m_current;
     int                     m_direction;
+    bool                    m_running;
+    bool                    m_looped;
 };
 
 }

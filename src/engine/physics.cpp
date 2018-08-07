@@ -1,11 +1,6 @@
 #include "engine/physics.h"
 using namespace engine;
 
-Physics::Physics()
-{
-
-}
-
 Physics_Box2D::Physics_Box2D() :
     Physics(),
     m_velIterations(6),

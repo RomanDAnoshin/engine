@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
     gui.AddWidget(&label);
 
 
-    float angle = 0.f;
+    float angle = 0;
     float speed = 250.f;
     Button button("Reset");
     button.SetPosition(800 - button.GetSize().x, 0);
@@ -195,8 +195,7 @@ int main(int argc, char *argv[])
         if (Input::IsKeyPressed(KEYBOARD::D))
             angle += 2.f * dt;
         b1->SetTransform(b1->GetPosition(), angle);
-        Vector2f direction(std::sin(angle), -1.f * std::cos(angle));
-        b2Vec2 force(direction.x * value, direction.y * value);
+        b2Vec2 force(std::sin(angle) * value, -1.f * std::cos(angle) * value);
         if (force.x != 0 || force.y != 0)
             b1->ApplyForce(force, b1->GetPosition(), true);
     });

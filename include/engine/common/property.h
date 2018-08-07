@@ -8,7 +8,7 @@ template <typename return_type>
 class AbstractGetter
 {
 public:
-    virtual ~AbstractGetter() { }
+    virtual ~AbstractGetter() = default;
     virtual AbstractGetter<return_type>* Clone() const = 0;
     virtual return_type Get() const = 0;
 };
@@ -37,7 +37,7 @@ template <typename arg_type>
 class AbstractSetter
 {
 public:
-    virtual ~AbstractSetter() { }
+    virtual ~AbstractSetter() = default;
     virtual AbstractSetter<arg_type>* Clone() const = 0;
     virtual void Set(arg_type args) const = 0;
 };

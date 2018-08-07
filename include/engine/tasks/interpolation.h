@@ -1,8 +1,9 @@
 #ifndef INTERPOLATION_H
 #define INTERPOLATION_H
 
-#include "engine/tools/property.h"
 #include "timer.h"
+#include "engine/common/math.h"
+#include "engine/common/property.h"
 #include <type_traits>
 
 namespace engine
@@ -34,7 +35,7 @@ public:
             Finish();
         }
         float ratio = m_currentTime / m_totalTime;
-        value_type value = lerp(m_startValue, m_finishValue, ratio);
+        value_type value = math::lerp(m_startValue, m_finishValue, ratio);
         m_property.SetValue(value);
     }
 

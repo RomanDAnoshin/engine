@@ -1,11 +1,11 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
+#include "common/rect.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <stdexcept>
 #include <string>
-#include "globals.h"
 
 namespace engine
 {

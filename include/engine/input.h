@@ -1,9 +1,9 @@
 #ifndef INPUT_H
 #define INPUT_H
 
+#include "common/vector2.h"
+#include "common/event.h"
 #include <allegro5/allegro.h>
-#include "tools/event.h"
-#include "globals.h"
 
 namespace engine
 {
@@ -33,7 +33,6 @@ enum class MOUSE : unsigned char
 class Input
 {
 public:
-
     static void HandleEvent(ALLEGRO_EVENT& event);
 
     static bool IsKeyPressed(KEYBOARD key);

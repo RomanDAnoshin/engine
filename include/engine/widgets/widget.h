@@ -2,6 +2,7 @@
 #define WIDGET_H
 
 #include "engine/object.h"
+#include "engine/common/borderstyle.h"
 
 namespace engine
 {
@@ -34,7 +35,7 @@ class Widget : public Object
 public:
     Widget();
 
-    virtual ~Widget();
+    virtual ~Widget() = default;
 
     const Color& GetBackColor() const;
 

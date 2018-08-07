@@ -1,7 +1,7 @@
 #ifndef TASK_H
 #define TASK_H
 
-#include "engine/tools/event.h"
+#include "engine/common/event.h"
 
 namespace engine
 {
@@ -12,7 +12,7 @@ public:
     Task() :
         m_userData(nullptr), m_finished(false) { }
 
-    virtual ~Task() { }
+    virtual ~Task() = default;
 
     void* GetUserData() { return m_userData; }
 

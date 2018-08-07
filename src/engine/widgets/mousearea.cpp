@@ -8,10 +8,7 @@ MouseArea::MouseArea() :
 
 }
 
-MouseArea::~MouseArea()
-{
-
-}
+MouseArea::~MouseArea() = default;
 
 void MouseArea::HandleMouseEvent(ALLEGRO_EVENT& event, const IntRect& bounds)
 {

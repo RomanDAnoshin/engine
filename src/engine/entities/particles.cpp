@@ -122,10 +122,10 @@ void ParticleEmitter::Update(const float dt)
         float ratio = p->lifetime / m_parameters.lifetimeRange.y;
 
         if (m_dynamicColor) {
-            p->color[0] = lerp(p->color[2], p->color[1], ratio);
+            p->color[0] = math::lerp(p->color[2], p->color[1], ratio);
         }
         if (m_dynamicRadius) {
-            p->radius[0] = p->radius[2] + (p->radius[1] - p->radius[2]) * ratio;
+            p->radius[0] = math::lerp(p->radius[2], p->radius[1], ratio);
         }
     }
     if (!m_running) {

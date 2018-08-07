@@ -11,7 +11,7 @@ class WidgetContainer : public Widget, private Container
 public:
     WidgetContainer();
 
-    virtual ~WidgetContainer();
+    virtual ~WidgetContainer() = default;
 
     using Container::GetObjects;
     using Container::Clear;

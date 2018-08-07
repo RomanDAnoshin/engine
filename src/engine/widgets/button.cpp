@@ -17,7 +17,7 @@ void Button::HandleEvent(ALLEGRO_EVENT& event)
     if (container == nullptr) {
         HandleMouseEvent(event, bounds);
     } else {
-        IntRect rect = GetAbsoluteBounds().Intersection(container->GetAbsoluteBounds());
+        IntRect rect = GetAbsoluteBounds().GetIntersection(container->GetAbsoluteBounds());
         HandleMouseEvent(event, rect);
     }
 }

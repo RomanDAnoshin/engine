@@ -8,11 +8,6 @@ Scene::Scene() :
     m_rootWidget.SetAnchor(Anchor::All);
 }
 
-Scene::~Scene()
-{
-
-}
-
 EntityContainer& Scene::GetRootEntity()
 {
     return m_rootEntity;

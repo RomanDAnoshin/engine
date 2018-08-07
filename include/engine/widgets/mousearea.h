@@ -1,9 +1,9 @@
 #ifndef MOUSEAREA_H
 #define MOUSEAREA_H
 
+#include "engine/common/rect.h"
+#include "engine/common/event.h"
 #include <allegro5/allegro.h>
-#include "engine/tools/event.h"
-#include "engine/globals.h"
 
 namespace engine
 {

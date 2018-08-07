@@ -9,11 +9,6 @@ Widget::Widget() :
 
 }
 
-Widget::~Widget()
-{
-
-}
-
 const Color& Widget::GetBackColor() const
 {
     return m_backColor;

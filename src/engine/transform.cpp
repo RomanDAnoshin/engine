@@ -93,10 +93,7 @@ Transformable::Transformable() :
 
 }
 
-Transformable::~Transformable()
-{
-
-}
+Transformable::~Transformable() = default;
 
 const Vector2f& Transformable::GetPosition() const
 {
@@ -110,7 +107,7 @@ const Vector2f& Transformable::GetScale() const
 
 Angle Transformable::GetRotation() const
 {
-    return radiansToDegrees(m_rotation);
+    return m_rotation;
 }
 
 void Transformable::SetPosition(const Vector2f& position)

@@ -2,6 +2,7 @@
 #define TEXT_H
 
 #include "font.h"
+#include "engine/common/color.h"
 #include <vector>
 #include <iostream>
 #include <sstream>

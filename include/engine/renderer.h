@@ -2,7 +2,6 @@
 #define RENDERER_H
 
 #include "texture.h"
-#include "globals.h"
 #include "transform.h"
 #include "text/text.h"
 #include <allegro5/allegro_primitives.h>

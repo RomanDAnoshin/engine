@@ -12,10 +12,7 @@ Text::Text(const std::string& text, const Font& font) :
     updateDrawingPoint();
 }
 
-Text::~Text()
-{
-
-}
+Text::~Text() = default;
 
 const Font& Text::GetFont() const
 {

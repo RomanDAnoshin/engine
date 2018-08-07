@@ -13,7 +13,7 @@ template <typename return_type, typename... arg_types>
 class AbstractDelegate<return_type(arg_types...)>
 {
 public:
-    virtual ~AbstractDelegate() { }
+    virtual ~AbstractDelegate() = default;
 
     virtual return_type Invoke(arg_types... args...) const = 0;
 };
