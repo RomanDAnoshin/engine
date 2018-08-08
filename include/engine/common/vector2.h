@@ -8,8 +8,7 @@ template <typename T>
 struct Vector2
 {
     Vector2() :
-        x(T()),
-        y(T())
+        Vector2(T(), T())
     {
 
     }
@@ -22,8 +21,7 @@ struct Vector2
     }
 
     Vector2(const T& value) :
-        x(value),
-        y(value)
+        Vector2(value, value)
     {
 
     }

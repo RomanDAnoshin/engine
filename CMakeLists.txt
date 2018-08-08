@@ -19,6 +19,7 @@ set(SOURCES
     src/engine/common/angle.cpp
     src/engine/common/color.cpp
     src/engine/common/borderstyle.cpp
+    src/engine/common/vertex.cpp
     src/engine/text/text.cpp
     src/engine/text/font.cpp
     src/engine/entities/entity.cpp
@@ -51,9 +52,11 @@ set(HEADERS
     include/engine/common/math.h
     include/engine/common/angle.h
     include/engine/common/vector2.h
+    include/engine/common/vector3.h
     include/engine/common/rect.h
     include/engine/common/color.h
     include/engine/common/borderstyle.h
+    include/engine/common/vertex.h
     include/engine/common/delegate.h
     include/engine/common/event.h
     include/engine/common/property.h
