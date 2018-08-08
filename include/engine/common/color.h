@@ -88,6 +88,9 @@ struct BaseColor
     T r, g, b, a;
 };
 
+struct Color;
+struct Colorf;
+
 struct Color : BaseColor<unsigned char>
 {
     Color();
@@ -97,18 +100,22 @@ struct Color : BaseColor<unsigned char>
     Color(const Color& color);
 
     Color(const BaseColor<unsigned char>& base);
+
+    operator Colorf() const;
 };
 
 
-struct ColorF : BaseColor<float>
+struct Colorf : BaseColor<float>
 {
-    ColorF();
+    Colorf();
 
-    ColorF(float r, float g, float b, float a = 1.f);
+    Colorf(float r, float g, float b, float a = 1.f);
 
-    ColorF(const ColorF& color);
+    Colorf(const Colorf& color);
 
-    ColorF(const BaseColor<float>& base);
+    Colorf(const BaseColor<float>& base);
+
+    operator Color() const;
 };
 
 }

@@ -25,26 +25,40 @@ Color::Color(const BaseColor<unsigned char>& base) :
 
 }
 
-ColorF::ColorF() :
+engine::Color::operator Colorf() const
+{
+    return Colorf(r / 255.f, g / 255.f, b / 255.f, a / 255.f);
+}
+
+Colorf::Colorf() :
     BaseColor<float>(1.f, 1.f, 1.f, 1.f)
 {
 
 }
 
-ColorF::ColorF(float r, float g, float b, float a) :
+Colorf::Colorf(float r, float g, float b, float a) :
     BaseColor<float>(r, g, b, a)
 {
 
 }
 
-ColorF::ColorF(const ColorF& color) :
-    ColorF(color.r, color.g, color.b, color.a)
+Colorf::Colorf(const Colorf& color) :
+    Colorf(color.r, color.g, color.b, color.a)
 {
 
 }
 
-ColorF::ColorF(const BaseColor<float>& base) :
+Colorf::Colorf(const BaseColor<float>& base) :
     BaseColor<float>(base)
 {
+
+}
+
+Colorf::operator Color() const
+{
+    return Color(static_cast<unsigned char>(r * 255),
+                 static_cast<unsigned char>(g * 255),
+                 static_cast<unsigned char>(b * 255),
+                 static_cast<unsigned char>(a * 255));
 
 }
