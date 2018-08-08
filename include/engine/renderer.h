@@ -4,6 +4,7 @@
 #include "texture.h"
 #include "transform.h"
 #include "text/text.h"
+#include "common/vertex.h"
 #include <allegro5/allegro_primitives.h>
 
 namespace engine
@@ -48,9 +49,13 @@ public:
 
     void FillRoundedRectangle(const Vector2f& position, const Vector2f& size, const Color& color, float radius) const;
 
-    void DrawPolygon(const Vector2f* points, unsigned count, const Color& color, float thickness = 0.f) const;
+    void DrawPolygon(const Vector2f* points, size_t count, const Color& color, float thickness = 0.f) const;
 
-    void FillPolygon(const Vector2f* points, unsigned count, const Color& color) const;
+    void FillPolygon(const Vector2f* points, size_t count, const Color& color) const;
+
+    void DrawPrimitive(const Vertex* vertices, size_t count);
+
+    void FillPrimitive(const Vertex* vertices, size_t count);
 
 protected:
     void useTransform();

@@ -109,18 +109,28 @@ void Renderer::FillRoundedRectangle(const Vector2f& position, const Vector2f& si
     al_draw_filled_rounded_rectangle(position.x, position.y, position.x + size.x, position.y + size.y, radius, radius, c);
 }
 
-void Renderer::DrawPolygon(const Vector2f* points, unsigned count, const Color& color, float thickness) const
+void Renderer::DrawPolygon(const Vector2f* points, size_t count, const Color& color, float thickness) const
 {
     ALLEGRO_COLOR c = al_map_rgba(color.r, color.g, color.b, color.a);
     const float* data = reinterpret_cast<const float*>(points);
     al_draw_polygon(data, count, ALLEGRO_LINE_JOIN_NONE, c, thickness, 0.f);
 }
 
-void Renderer::FillPolygon(const Vector2f* points, unsigned count, const Color& color) const
+void Renderer::FillPolygon(const Vector2f* points, size_t count, const Color& color) const
 {
     ALLEGRO_COLOR c = al_map_rgba(color.r, color.g, color.b, color.a);
     const float* data = reinterpret_cast<const float*>(points);
     al_draw_filled_polygon(data, count, c);
+}
+
+void Renderer::DrawPrimitive(const Vertex* vertices, size_t count)
+{
+    al_draw_prim(vertices, nullptr, nullptr, 0, count, ALLEGRO_PRIM_LINE_LOOP);
+}
+
+void Renderer::FillPrimitive(const Vertex* vertices, size_t count)
+{
+    al_draw_prim(vertices, nullptr, nullptr, 0, count, ALLEGRO_PRIM_TRIANGLE_FAN);
 }
 
 void Renderer::useTransform()
